@@ -918,9 +918,6 @@ vendor/lib64/vendor.qti.latency@2.0.so|72645a214e8675680862af236420d8195651f29d
 # Charger
 vendor/bin/hvdcp_opti
 
-# Consumer IR - from Daisy QKQ1.191002.002-V11.0.5.0.QDLMIXM
-vendor/lib64/hw/consumerir.default.so
-
 # Fingerprint - from Daisy QKQ1.191002.002-V11.0.5.0.QDLMIXM
 -vendor/app/FingerprintExtensionService/FingerprintExtensionService.apk
 vendor/bin/hw/android.hardware.biometrics.fingerprint@2.1-service
