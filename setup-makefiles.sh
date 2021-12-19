@@ -9,8 +9,8 @@
 set -e
 
 # Required!
-DEVICE=sakura
-VENDOR=xiaomi
+DEVICE=A001D
+VENDOR=asus
 
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"

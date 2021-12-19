@@ -15,7 +15,7 @@
 #
 
 # Get non-open-source specific aspects
-$(call inherit-product, vendor/xiaomi/sakura/sakura-vendor.mk)
+$(call inherit-product, vendor/asus/A001D/A001D-vendor.mk)
 
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
@@ -257,7 +257,7 @@ PRODUCT_COPY_FILES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.sakura
+    android.hardware.light@2.0-service.A001D
 
 # Codec2 modules
 PRODUCT_PACKAGES += \
@@ -312,7 +312,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/power/powerhint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.xml
 
 # Properties
--include device/xiaomi/sakura/prop.mk
+-include device/asus/A001D/prop.mk
 
 # QMI
 PRODUCT_PACKAGES += \
@@ -335,7 +335,7 @@ PRODUCT_PACKAGES += \
     init.goodix.sh \
     init.recovery.qcom.rc \
     init.recovery.qcom.usb.rc \
-    init.sakura.rc
+    init.A001D.rc
 
 # RCS
 PRODUCT_PACKAGES += \

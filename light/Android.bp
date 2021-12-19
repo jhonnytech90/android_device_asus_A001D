@@ -15,10 +15,10 @@
 cc_binary {
     relative_install_path: "hw",
     defaults: ["hidl_defaults"],
-    name: "android.hardware.light@2.0-service.sakura",
+    name: "android.hardware.light@2.0-service.A001D",
     proprietary: true,
-    init_rc: ["android.hardware.light@2.0-service.sakura.rc"],
-    vintf_fragments: ["android.hardware.light@2.0-service.sakura.xml"],
+    init_rc: ["android.hardware.light@2.0-service.A001D.rc"],
+    vintf_fragments: ["android.hardware.light@2.0-service.A001D.xml"],
     srcs: ["service.cpp", "Light.cpp"],
     shared_libs: [
         "libhardware",

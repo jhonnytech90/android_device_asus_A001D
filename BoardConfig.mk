@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/xiaomi/sakura
+DEVICE_PATH := device/asus/A001D
 
 # Architecture
 TARGET_ARCH := arm64
@@ -41,14 +41,13 @@ BUILD_BROKEN_VINTF_PRODUCT_COPY_FILES := true
 
 # Kernel
 BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78af000 androidboot.usbconfigfs=true loop.max_part=16
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78af000 firmware_class.path=/vendor/firmware_mnt/image loop.max_part=7 androidboot.usbconfigfs=false
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_PAGESIZE :=  2048
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
-TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8953
-TARGET_KERNEL_CONFIG := sakura_defconfig
-TARGET_KERNEL_VERSION := 4.9
-TARGET_KERNEL_CLANG_COMPILE := true
+TARGET_KERNEL_SOURCE := kernel/asus/A001D
+TARGET_KERNEL_CONFIG := A001D_defconfig
+TARGET_KERNEL_VERSION := 3.18
 
 # ANT
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
@@ -142,12 +141,12 @@ TARGET_USES_MEDIA_EXTENSIONS := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_PERSISTIMAGE_PARTITION_SIZE := 33554432
 BOARD_FLASH_BLOCK_SIZE := 131072
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3221225472
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 25765043200
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3690987520
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 3112173568
 BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 25765043200
-BOARD_VENDORIMAGE_PARTITION_SIZE := 872415232
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 3112173568
+BOARD_VENDORIMAGE_PARTITION_SIZE := 838860800
 BOARD_ROOT_EXTRA_SYMLINKS := \
     /vendor/dsp:/dsp \
     /vendor/firmware_mnt:/firmware \

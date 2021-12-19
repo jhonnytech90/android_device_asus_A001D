@@ -1,14 +1,12 @@
 [
  {
-   "repository"  : "kernel_xiaomi_msm8953",
-   "target_path" : "kernel/xiaomi/msm8953",
-   "remote"      : "pixel-devices",
+   "repository"  : "kernel_asus_A001D",
+   "target_path" : "kernel/asus/A001D",
    "branch"      : "eleven"
  },
  {
-   "repository"  : "vendor_xiaomi_sakura",
-   "target_path" : "vendor/xiaomi/sakura",
-   "remote"      : "pixel-devices-blobs",
+   "repository"  : "vendor_asus_A001D",
+   "target_path" : "vendor/asus/A001D",
    "branch"      : "eleven"
  }
 ]

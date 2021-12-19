@@ -16,7 +16,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE),sakura)
+ifeq ($(TARGET_DEVICE),A001D)
 include $(call all-makefiles-under,$(LOCAL_PATH))
 
 include $(CLEAR_VARS)
