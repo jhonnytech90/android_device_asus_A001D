@@ -384,10 +384,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
-    init.qcom.usb.sh
-
-PRODUCT_SOONG_NAMESPACES += \
-    vendor/qcom/opensource/usb/etc
+    init.qcom.usb.sh \
+		init.msm.usb.configfs.rc
 
 # VNDK
 PRODUCT_PACKAGES += \
