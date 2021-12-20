@@ -69,6 +69,10 @@ on post-fs-data
     mkdir /persist/qti_fp 0700 system system
     mkdir /data/misc/seemp 0700 system system
     mkdir /data/misc/audio_pp 0771 media audio
+    # Clear existing log and start the service
+    rm /cache/boot_log.txt
+    start logger
+
 
 #Create folder for mm-qcamera-daemon
 mkdir /data/vendor/camera 0770 camera camera
@@ -88,6 +92,13 @@ service vendor.per_mgr /vendor/bin/pm-service
     group system
     ioprio rt 4
     writepid /dev/cpuset/system-background/tasks
+
+service logger /system/bin/logcat -b all -D -f /cache/boot_log.txt
+    class main
+    user root
+    group root system
+    disabled
+    oneshot
 
 service vendor.per_proxy /vendor/bin/pm-proxy
     class core
@@ -231,3 +242,7 @@ service ppd /vendor/bin/mm-pp-dpps
     group system graphics
     socket pps stream 0660 system system
     disabled
+
+on property:sys.boot_completed=1
+    # Stop the logger service
+    stop logger
