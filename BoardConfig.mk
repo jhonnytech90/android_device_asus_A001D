@@ -92,7 +92,10 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/configs/bluetooth
 USE_DEVICE_SPECIFIC_CAMERA := true
 TARGET_USES_QTI_CAMERA_DEVICE := true
 BOARD_QTI_CAMERA_32BIT_ONLY := true
-TARGET_TS_MAKEUP := true
+
+# Shims
+TARGET_LD_SHIM_LIBS := \
+    /vendor/lib/hw/camera.msm8953.so|libshims_camera.so
 
 # Config
 TARGET_FS_CONFIG_GEN := $(DEVICE_PATH)/configs/config.fs
