@@ -1,0 +1,7 @@
+
+allow sensors persist_file:dir { search write };
+allow sensors persist_file:file { read write };
+allow sensors persist_file:fifo_file { read open };
+allow sensors persist_file:dir { add_name };
+allow sensors persist_file:file { open };
+allow sensors persist_file:file { create };

@@ -1,0 +1,6 @@
+allow hal_sensors_default persist_file:dir { search write };
+allow hal_sensors_default persist_file:file { read write };
+allow hal_sensors_default persist_file:fifo_file { read open };
+allow hal_sensors_default persist_file:dir { add_name };
+allow hal_sensors_default persist_file:file { open };
+allow hal_sensors_default persist_file:file { create };
