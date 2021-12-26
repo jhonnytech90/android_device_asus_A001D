@@ -996,15 +996,7 @@ vendor/lib/libwfdmodulehdcpsession.so|0bb7ae8cde5b3b105e86c9551142e00835a80003
 vendor/lib64/libwfdhdcpcp.so|582ccf5cc79791dba3caaee7c0eaa4cc58a33e39
 
 # Camera
-vendor/bin/hw/android.hardware.camera.provider@2.4-service
 vendor/bin/mm-qcamera-daemon
-vendor/etc/init/android.hardware.camera.provider@2.4-service.rc
-vendor/lib64/camera.device@1.0-impl.so
-vendor/lib64/camera.device@3.2-impl.so
-vendor/lib64/camera.device@3.3-impl.so
-vendor/lib64/camera.device@3.4-external-impl.so
-vendor/lib64/camera.device@3.4-impl.so
-vendor/lib64/hw/android.hardware.camera.provider@2.4-impl.so
 vendor/lib64/libcamera_sensor_handle.so
 vendor/lib64/libmmcamera2_frame_algorithm.so
 vendor/lib64/libmmcamera2_is.so
@@ -1013,13 +1005,6 @@ vendor/lib64/libmmcamera2_stats_algorithm.so
 vendor/lib64/libmmcamera_dbg.so
 vendor/lib64/libmmcamera_tintless_algo.so
 vendor/lib64/libmmcamera_tintless_bg_pca_algo.so
-vendor/lib64/vendor.qti.hardware.camera.device@1.0.so
-vendor/lib/camera.device@1.0-impl.so
-vendor/lib/camera.device@3.2-impl.so
-vendor/lib/camera.device@3.3-impl.so
-vendor/lib/camera.device@3.4-external-impl.so
-vendor/lib/camera.device@3.4-impl.so
-vendor/lib/hw/android.hardware.camera.provider@2.4-impl.so
 vendor/lib/hw/camera.msm8953.so
 vendor/lib/libarcsoft_beautyshot.so
 vendor/lib/libarcsoft_dualcam_refocus.so
@@ -1190,7 +1175,6 @@ vendor/lib/libremosaic_daemon.so
 vendor/lib/libvideoutils.so
 vendor/lib/libmpbase.so
 vendor/lib/libqomx_core.so
-vendor/lib/vendor.qti.hardware.camera.device@1.0.so
 
 # Camera configs
 vendor/etc/camera/camera_config.xml
