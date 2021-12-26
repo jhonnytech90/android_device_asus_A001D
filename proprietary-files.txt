@@ -364,11 +364,12 @@ vendor/lib64/libssd.so|bcb7c4213115f2377e0d30dd1a05cae5e88212e4
 vendor/lib64/libops.so|b2223e64db9d8f84262da7a8621013d3c63b6c98
 vendor/lib64/libspl.so|0fa8c0711f72fc8a914dce044cf8dddd79ee62e1
 
-# DRM - Widevine - from Crosshatch - 11/RQ2A.210405.006/7214111
-vendor/bin/hw/android.hardware.drm@1.3-service.widevine|57d280849768bc5d5e9e954b9ac90a5a31c54172
-vendor/etc/init/android.hardware.drm@1.3-service.widevine.rc|6b00f42dc85becc58f303bc4588331239c5c83aa
--vendor/etc/vintf/manifest/manifest_android.hardware.drm@1.3-service.widevine.xml|ebebcf8f367641480cf7d512fc06e6ab777527be
-vendor/lib64/libwvhidl.so|baae2e9c3e2f31f06787de1801b30fd8881b99e8
+# DRM - from A001D
+vendor/etc/init/android.hardware.drm@1.1-service.clearkey.rc
+vendor/etc/init/android.hardware.drm@1.1-service.widevine.rc
+vendor/bin/hw/android.hardware.drm@1.1-service.clearkey
+vendor/bin/hw/android.hardware.drm@1.1-service.widevine
+vendor/lib64/libwvhidl.so
 
 # ESE-Powermanager - from LA.UM.8.6.2.r1-07600-89xx.0
 vendor/bin/hw/vendor.qti.esepowermanager@1.0-service|a5b8d74b2374ea757c90bbbe450e34533fb6c137
