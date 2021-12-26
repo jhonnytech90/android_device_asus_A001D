@@ -325,22 +325,6 @@ vendor/lib64/vendor.qti.latency@2.0.so|72645a214e8675680862af236420d8195651f29d
 # Charger
 vendor/bin/hvdcp_opti
 
-# Fingerprint - from Daisy QKQ1.191002.002-V11.0.5.0.QDLMIXM
--vendor/app/FingerprintExtensionService/FingerprintExtensionService.apk
-vendor/bin/hw/android.hardware.biometrics.fingerprint@2.1-service
-vendor/etc/init/android.hardware.biometrics.fingerprint@2.1-service.rc
-vendor/etc/permissions/com.fingerprints.extension.xml
-vendor/framework/com.fingerprints.extension.jar
-vendor/lib/vendor.qti.hardware.fingerprint@1.0.so
-vendor/lib64/com.fingerprints.extension@1.0.so
-vendor/lib64/hw/fingerprint.default.so
-vendor/lib64/hw/gf_fingerprint.default.so
-vendor/lib64/libgf_ca.so
-vendor/lib64/libgf_hal.so
-vendor/lib64/libvendor.goodix.hardware.fingerprint@1.0-service.so
-vendor/lib64/libvendor.goodix.hardware.fingerprint@1.0.so
-vendor/lib64/vendor.qti.hardware.fingerprint@1.0.so
-
 # DPM - from LA.UM.9.6.2.r1-02800-89xx.0
 system_ext/bin/dpmd|fd992da979dafa1822f7aca32d7a30fd54558724
 system_ext/etc/dpm/dpm.conf|95e27da8c989e96c6faea6f0697bce11955b62a5

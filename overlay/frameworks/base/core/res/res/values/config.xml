@@ -477,9 +477,6 @@
          -->
     <string translatable="false" name="config_mainBuiltInDisplayCutout">M -186,0 L -186,94 L 186,94 L 186,0 Z</string>
 
-    <!-- Specify if the fingerprint hardware support gestures-->
-    <bool name="config_fingerprintSupportsGestures">true</bool>
-
     <!-- Enable system navigation keys. -->
     <bool name="config_supportSystemNavigationKeys">true</bool>
 
@@ -492,13 +489,4 @@
     <!-- Height of the status bar -->
     <dimen name="status_bar_height_portrait">94.0px</dimen>
     <dimen name="status_bar_height_landscape">24.0dp</dimen>
-
-    <!-- List of biometric sensors on the device, in decreasing strength. Consumed by AuthService
-         when registering authenticators with BiometricService. Format must be ID:Modality:Strength,
-         where: IDs are unique per device, Modality as defined in BiometricAuthenticator.java,
-         and Strength as defined in Authenticators.java -->
-    <string-array name="config_biometric_sensors" translatable="false" >
-        <item>0:2:15</item> <!-- ID0:Fingerprint:Strong -->
-    </string-array>
-
 </resources>
