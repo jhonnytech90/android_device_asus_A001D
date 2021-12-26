@@ -55,7 +55,8 @@ vendor.camera.lowpower.record.enable=1 \
 vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.huaqin.factory,com.mi.AutoTest \
 vendor.camera.aux.packagelist2=com.android.systemui,com.huaqin.cameraautotest,com.huaqin.runtime \
 vendor.camera.aux.packageblacklist=com.discord \
-persist.vendor.qti.telephony.vt_cam_interface=2
+persist.vendor.qti.telephony.vt_cam_interface=2 \
+persist.camera.exif.rotation = 0
 
 # Charger
 PRODUCT_PRODUCT_PROPERTIES += \
