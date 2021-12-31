@@ -249,7 +249,9 @@ PRODUCT_COPY_FILES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.A001D
+		android.hardware.light@2.0-service \
+		android.hardware.light@2.0-impl \
+		lights.msm8953
 
 # Codec2 modules
 PRODUCT_PACKAGES += \

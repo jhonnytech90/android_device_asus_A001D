@@ -170,6 +170,9 @@ TARGET_PER_MGR_ENABLED := true
 TARGET_USES_INTERACTION_BOOST := true
 TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/wakeup_gesture"
 
+# Lights
+TARGET_PROVIDES_LIBLIGHT := true
+
 # Qualcomm
 BOARD_USES_QCOM_HARDWARE := true
 
