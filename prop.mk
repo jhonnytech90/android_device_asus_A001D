@@ -82,7 +82,6 @@ persist.debug.coresight.config=stm-events
 PRODUCT_PROPERTY_OVERRIDES += \
 debug.egl.hw=0 \
 debug.enable.sglscale=1 \
-debug.hwui.renderer=skiagl \
 debug.mdpcomp.logs=0 \
 debug.sf.enable_hwc_vds=1 \
 debug.sf.hw=0 \
@@ -96,7 +95,7 @@ persist.hwc.enable_vds=1 \
 persist.hwc.mdpcomp.enable=true \
 ro.opengles.version=196610 \
 ro.qualcomm.cabl=2 \
-ro.sf.lcd_density=480 \
+ro.sf.lcd_density=420 \
 ro.vendor.display.cabl=2 \
 sdm.debug.disable_skip_validate=1 \
 vendor.display.disable_skip_validate=1 \
@@ -130,7 +129,6 @@ ro.gps.agps_provider=1
 # Media
 PRODUCT_PROPERTY_OVERRIDES += \
 av.debug.disable.pers.cache=1 \
-debug.sf.enable_hwc_vds=1 \
 media.aac_51_output_enabled=true \
 media.msm8956hw=0 \
 media.stagefright.audio.sink=280 \
@@ -143,8 +141,6 @@ vendor.vidc.dec.downscalar_width=1920 \
 vendor.vidc.disable.split.mode=1 \
 vendor.vidc.enc.disable.pq=true \
 vendor.vidc.enc.disable_bframes=1 \
-vendor.video.disable.ubwc=1 \
-vendor.gralloc.enable_fb_ubwc=1 \
 vendor.video.disable.ubwc=1
 
 # Memory optimizations
