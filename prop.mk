@@ -56,7 +56,13 @@ vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.huaq
 vendor.camera.aux.packagelist2=com.android.systemui,com.huaqin.cameraautotest,com.huaqin.runtime \
 vendor.camera.aux.packageblacklist=com.discord \
 persist.vendor.qti.telephony.vt_cam_interface=2 \
-persist.camera.exif.rotation = 0
+persist.camera.exif.rotation=0 \
+persist.vendor.camera.expose.aux=1 \
+persist.camera.HAL3.enabled=1 \
+persist.camera.eis.enable=1 \
+persist.camera.CDS=off \
+persist.vendor.camera.CDS=off \
+persist.camera.video.CDS=false
 
 # Charger
 PRODUCT_PRODUCT_PROPERTIES += \
