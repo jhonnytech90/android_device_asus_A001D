@@ -189,7 +189,8 @@ PRODUCT_PACKAGES += \
     libdisplayconfig \
     libqdMetaData.system \
     libgenlock \
-    libtinyxml
+    libtinyxml \
+		libvulkan
 
 # DRM
 PRODUCT_PACKAGES += \
