@@ -234,8 +234,8 @@ on boot
     setprop vendor.usb.dpl.inst.name "dpl"
 
     # DT2W Node
-    chown system system /proc/touchpanel/wakeup_gesture
-    chmod 0660 /proc/touchpanel/wakeup_gesture
+    chown system system /proc/tpd_gesture
+    chmod 0660 /proc/tpd_gesture
 
     # LEDs
     chown system system /sys/class/leds/red/blink

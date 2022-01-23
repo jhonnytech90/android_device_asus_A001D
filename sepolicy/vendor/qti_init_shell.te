@@ -1,0 +1,7 @@
+allow qti_init_shell persist_file:dir { search write getattr};
+allow qti_init_shell vfat:file { read open getattr };
+allow qti_init_shell sysfs:file { write open getattr };
+allow qti_init_shell vfat:dir search;
+
+# Allow qti_init_shell to read cmdline
+allow qti_init_shell proc_cmdline:file { getattr open read };
