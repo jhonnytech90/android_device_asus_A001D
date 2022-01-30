@@ -262,3 +262,6 @@ ro.com.google.clientidbase.ms=android-asus
 PRODUCT_PROPERTY_OVERRIDES += \
 ro.oem_unlock_supported=true
 
+#set cutoff voltage to 3400mV
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.cutoff_voltage_mv=3400
