@@ -250,3 +250,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
 ro.zram.mark_idle_delay_mins=60 \
 ro.zram.first_wb_delay_mins=180 \
 ro.zram.periodic_wb_delay_hours=24
+
+# GMS
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.com.google.rlzbrandcode=ASUP \
+ro.com.google.rlz_ap_whitelist=y0,y5,y6,y7,y9 \
+ro.com.google.clientidbase=android-asus \
+ro.com.google.clientidbase.ms=android-asus
+
