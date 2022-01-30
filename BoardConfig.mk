@@ -16,6 +16,8 @@
 
 DEVICE_PATH := device/asus/A001D
 
+BOARD_VENDOR := asus
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
