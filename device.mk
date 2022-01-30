@@ -165,6 +165,10 @@ PRODUCT_PACKAGES += \
 		Snap \
 		libshims_camera
 
+# Lineage livedisplay
+PRODUCT_PACKAGES += \
+		vendor.lineage.livedisplay@2.0-service-sdm
+
 # Component overrides
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sysconfig/component-overrides.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sysconfig/component-overrides.xml
