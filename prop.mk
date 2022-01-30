@@ -258,3 +258,7 @@ ro.com.google.rlz_ap_whitelist=y0,y5,y6,y7,y9 \
 ro.com.google.clientidbase=android-asus \
 ro.com.google.clientidbase.ms=android-asus
 
+# OEM UNLOCK
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.oem_unlock_supported=true
+
