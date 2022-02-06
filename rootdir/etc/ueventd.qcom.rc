@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2015, 2017-2018, The Linux Foundation. All rights reserved.
+# Copyright (c) 2012-2015, 2017-2019, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -55,16 +55,18 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/dpl_ctrl             0660   usb        usb
 /dev/ipa_odl_ctl          0660   radio      radio
 /dev/ipa_adpl             0660   system     oem_2905
+/dev/hab                  0666   system     system
+/dev/synx_device          0660   root       camera
 
-# permissions for CSVT
+#permissions for CSVT
 /dev/smd11                0660   radio      radio
 
-# permsissions for BT/FM
+#permsissions for BT/FM
 /dev/smd2                 0660   bluetooth  bluetooth
 /dev/smd3                 0660   bluetooth  bluetooth
 /dev/btpower              0660   bluetooth  system
 
-# permissions for pta
+#permissions for pta
 /dev/pta                  0660   system     system
 
 /dev/radio0               0640   system     system
@@ -137,6 +139,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/sec_nvm_*            0660   system     system
 /dev/cryptoapp            0660   system     system
 /dev/spdaemon_ssr         0660   system     system
+/dev/cam-hyp-intf*        0660   system     camera
 /dev/gemini0              0660   system     camera
 /dev/jpeg0                0660   system     camera
 /dev/jpeg1                0660   system     camera
@@ -166,6 +169,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/msm_vidc_dec_sec     0660   system     audio
 /dev/msm_vidc_enc         0660   system     audio
 /dev/msm_rotator          0660   system     system
+/dev/hw_random            0600   root       root
 /dev/sdsprpc-smd          0660   system     system
 
 #permissions for audio
@@ -209,6 +213,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/i2c-5                0660   media       media
 /dev/avtimer              0660   system     audio
 /dev/spidev2.0            0660   system     audio
+/dev/cpu_dma_latency      0660   system     audio
 
 # DVB devices
 /dev/dvb/adapter0/demux*  0440   media       media
@@ -297,6 +302,11 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/bus/pci/drivers/wil6210* 0000:01:00.0/net/wigig0/gro_flush_timeout 0660 system system
 /sys/devices/virtual/net/bond0 queues/rx-0/rps_cpus 0660 system system
 
+#nfc permissions
+/dev/nfc-nci              0660    nfc         nfc
+/dev/nq-nci               0660    nfc         nfc
+/dev/assd                 0660    nfc         nfc
+
 # UIO devices
 /dev/uio0                 0660   system     system
 /dev/uio1                 0660   system     system
@@ -326,6 +336,8 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/block/platform/soc/c0c4000.sdhci/by-name/frp       0600   system     system
 /dev/block/platform/soc/1d84000.ufshc/by-name/frp       0600   system     system
 /dev/block/platform/soc/7c4000.sdhci/by-name/frp        0600   system     system
+/dev/block/platform/soc/4744000.sdhci/by-name/frp       0600   system     system
+/dev/block/platform/soc/4804000.ufshc/by-name/frp       0600   system     system
 
 # This is temporary while using SD card for initial bring-up
 /dev/block/platform/soc/8804000.sdhci/by-name/frp       0600   system     system
@@ -352,7 +364,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/class/dual_role_usb/*	power_role	0660	system	system
 /sys/class/dual_role_usb/*	mode		0660	system	system
 
-# Memory Offline
+#Memory Offline
 /sys/devices/system/memory/memory* state    0660 system system
 
 # sys-fs display
@@ -374,8 +386,10 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/class/graphics/fb*     hdcp/tp                  0664    system  graphics
 /sys/class/graphics/fb*     hdcp2p2/min_level_change 0660    system  graphics
 /sys/class/graphics/fb*     hdmi_audio_cb            0600    audioserver audio
+
 /sys/class/graphics/fb*     lineptr_value            0664    system  graphics
 /sys/class/graphics/fb*     msm_fb_persist_mode      0664    system  graphics
+
 /sys/class/graphics/fb0     idle_time                0664    system  graphics
 /sys/class/graphics/fb0     dynamic_fps              0664    system  graphics
 /sys/class/graphics/fb0     dyn_pu                   0664    system  graphics
@@ -384,9 +398,4 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/class/graphics/fb0     msm_cmd_autorefresh_en   0664    system  graphics
 /sys/class/graphics/fb0     dynamic_bitclk           0664    system  graphics
 
-# Virtual
 /sys/devices/virtual/hdcp/msm_hdcp  min_level_change 0664    system  graphics
-
-# lirc
-/dev/lirc0                0660   system     system
-/dev/peel_ir              0660   system     system
