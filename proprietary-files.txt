@@ -71,6 +71,22 @@ vendor/firmware/widevine.b05
 vendor/firmware/widevine.b06
 vendor/firmware/widevine.mdt
 
+# Biometrics fingerprint - from A001D
+vendor/bin/hw/android.hardware.biometrics.fingerprint@2.1-service
+vendor/bin/hw/btlfpserver
+vendor/etc/init/android.hardware.biometrics.fingerprint@2.1-service.rc
+vendor/lib/vendor.qti.hardware.fingerprint@1.0.so
+vendor/lib64/hw/blestech.fingerprint.default.so
+vendor/lib64/hw/gf_fingerprint.default.so
+vendor/lib64/libBtlFpHal.so
+vendor/lib64/libbl_fp_algo.so
+vendor/lib64/libgf_ca.so
+vendor/lib64/libgf_hal.so
+vendor/lib64/libxuFPAlg.so
+vendor/lib64/libvendor.goodix.hardware.fingerprint@1.0-service.so
+vendor/lib64/libvendor.goodix.hardware.fingerprint@1.0.so
+vendor/lib64/vendor.qti.hardware.fingerprint@1.0.so
+
 # ADSP - from Daisy QKQ1.191002.002 V11.0.5.0.QDLMIXM
 vendor/bin/adsprpcd|a5e878691577485c9f7ee33dfe02384a13f0a265
 vendor/lib/libadsprpc.so|e00e8dcb88e9b204fd90bb2c32afcc7fa28dbad1

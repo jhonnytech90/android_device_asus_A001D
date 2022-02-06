@@ -48,3 +48,8 @@
 
 # Device nodes
 /dev/stune(/.*)?                                              u:object_r:cgroup:s0
+
+# Fingerprint
+/data/vendor/blfp(/.*)?                                         u:object_r:fingerprint_vendor_data_file:s0
+/dev/blfp                                                       u:object_r:fingerprint_device:s0
+/(vendor|system/vendor)/bin/hw/btlfpserver                      u:object_r:hal_fingerprint_default_exec:s0

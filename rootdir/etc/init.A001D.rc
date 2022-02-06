@@ -24,3 +24,22 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+
+on post-fs-data
+    # betterlife fingerprint
+    mkdir /data/vendor/blfp 0700 system  system
+
+on boot
+    #### begin fingerprint config begin ####
+    #goodix
+    chown system system /dev/goodix_fp
+    chmod 0666 /dev/goodix_fp
+    #betterlife
+    chown system system /dev/blfp
+    chmod 0666 /dev/blfp
+    #### end fingerprint config begin ####
+
+# betterlife fingerprint
+service btlfpserver /vendor/bin/hw/btlfpserver
+    class late_start
+    user system
