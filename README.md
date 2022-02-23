@@ -55,6 +55,18 @@ cd dot
 ```
 You now have all the tools you need and can proceed to initialize the DotOS code and device settings. Learn how to do this below:
 
+Configuring git Git:
+================
+Edit this by entering YOUR PERSONAL DATA FROM GITHUB
+
+```bash
+git config --global user.email "you@example.com"
+```
+```bash
+git config --global user.name "Your Name"
+```
+
+
 
 Downloading Source Code:
 ========================
