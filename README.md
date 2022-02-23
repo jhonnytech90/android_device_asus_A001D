@@ -1,5 +1,5 @@
 # BUILD DOTOS11 FOR A001D
-masternoob tutorial
+masternoob tutorial for build dotOS 11
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/DotOS/resources_drawables/master/dot11/dot_main-banner.png" > 
@@ -100,7 +100,15 @@ git clone https://github.com/jhonnytech90/android_device_asus_A001D -b dotOS dev
 git clone https://github.com/jhonnytech90/vendor_asus_A001D -b lineage-18.1 vendor/asus/A001D &&
 git clone https://github.com/jhonnytech90/kernel_asus_A001D -b 11 kernel/asus/A001D
 ```
-
+our device needs a prebuild kernel, to force compatibility I had to edit the DotOS Vendor Source to make it compatible so we will have to download it too:
+first we will delete the original:
+```bash
+sudo rm -r vendor/dot
+```
+now download the modified:
+```bash
+git clone https://github.com/jhonnytech90/android_vendor_dot -b dot11 vendor/dot
+```
 
 Compilation of DotOS:
 ====================
