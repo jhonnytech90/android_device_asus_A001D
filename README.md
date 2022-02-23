@@ -28,7 +28,7 @@ Install the necessary tools to make an Android build:
 sudo apt-get install bison g++-multilib git gperf libxml2-utils make zlib1g-dev:i386 zip liblz4-tool libncurses5 libssl-dev bc flex curl python-is-python3
 ```
 
-creating the necessary folders and giving permissions:
+Creating the necessary folders and giving permissions:
 ================
 
 ```bash
@@ -114,5 +114,7 @@ lunch dot_A001D-userdebug
 
 ```bash
 make bacon -J8
+```
 
+If you still couldn't compile a rom, you can kill yourself right now because you have no salvation,sorry!
 -----------------------------------------------------------------------------
