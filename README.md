@@ -20,7 +20,7 @@ Then to sync up:
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 ```
 
-If you get permission errors, type::
+If you get permission errors, type:
 ================
 
 ```bash
