@@ -19,6 +19,14 @@ Then to sync up:
 ```bash
 repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 ```
+
+If you get permission errors, type::
+================
+
+```bash
+sudo chmod 777 /etc/.repo_gitconfig.json
+```
+
 Downloading Device Trees:
 ========================
 ```bash
