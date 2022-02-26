@@ -96,7 +96,7 @@ sudo chmod 777 /etc/.repo_gitconfig.json
 Downloading Device Trees:
 ========================
 ```bash
-git clone https://github.com/jhonnytech90/android_device_asus_A001D -b dotOS device/asus/A001D &&
+git clone https://github.com/jhonnytech90/android_device_asus_A001D -b cafex device/asus/A001D &&
 git clone https://github.com/jhonnytech90/vendor_asus_A001D -b lineage-18.1 vendor/asus/A001D &&
 git clone https://github.com/jhonnytech90/kernel_asus_A001D -b 11 kernel/asus/A001D
 ```
