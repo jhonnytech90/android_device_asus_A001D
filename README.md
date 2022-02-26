@@ -110,7 +110,7 @@ now download the modified:
 git clone https://github.com/jhonnytech90/android_vendor_dot -b dot11 vendor/dot
 ```
 
-Compilation of DotOS:
+Compilation of CAFEX:
 ====================
 
 From root directory of Project, perform following commands in terminal to start Compilation.
