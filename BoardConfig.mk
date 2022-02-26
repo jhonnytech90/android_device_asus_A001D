@@ -204,6 +204,9 @@ VENDOR_SECURITY_PATCH := 2020-02-05
 include device/qcom/sepolicy/SEPolicy.mk
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 
+# Build duplicate files for tree and source rom
+BUILD_BROKEN_DUP_RULES := true
+
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
 
