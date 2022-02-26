@@ -1,5 +1,5 @@
 # BUILD CAF EXTENDED FOR A001D
-masternoob tutorial for build CAF-Extended Eleven
+tutorial for build CAF-Extended Eleven
 
 <p align="center">
   <img src="https://i.imgur.com/A5riwr0.png"/>
@@ -128,5 +128,19 @@ lunch cafex_A001D-userdebug
 m cafex
 ```
 
-If you still couldn't compile a rom, you can kill yourself right now because you have no salvation,sorry!
+Upload your Rom:
+====================
+
+to upload your custom rom quickly without much exercise, enter the following command:
+```bash
+cd out/target/product/A001D
+```
+```bash
+ls
+```
+```bash
+curl --upload-file "$NAMEFORARCHIVEROM.zip"
+```
+
+READY! YOU JUST COMPILED YOUR CUSTOM ROM!
 -----------------------------------------------------------------------------
