@@ -1,8 +1,8 @@
-# BUILD DOTOS11 FOR A001D
-masternoob tutorial for build dotOS 11
+# BUILD CAF EXTENDED FOR A001D
+masternoob tutorial for build CAF-Extended Eleven
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/DotOS/resources_drawables/master/dot11/dot_main-banner.png" > 
+  <img src="https://i.imgur.com/A5riwr0.png"/>
 </p>
 
 Prepare your Machine and Java environment:
@@ -48,10 +48,10 @@ export PATH=~/bin:$PATH
 source ~/.bashrc
 ```
 ```bash
-mkdir dot
+mkdir cafex
 ```
 ```bash
-cd dot
+cd cafex
 ```
 You now have all the tools you need and can proceed to initialize the DotOS code and device settings. Learn how to do this below:
 
@@ -76,7 +76,7 @@ Downloading Source Code:
 To initialize your local repository, use a command like this:
 
 ```bash
-repo init -u git://github.com/DotOS/manifest.git -b dot11
+  repo init -u https://github.com/CAF-Extended/manifest -b 11.0
 ```
 
 Then to sync up:
@@ -131,11 +131,11 @@ source build/envsetup.sh
 ```
 
 ```bash
-lunch dot_A001D-userdebug
+lunch cafex_A001D-userdebug
 ```
 
 ```bash
-make bacon -J8
+m cafex
 ```
 
 If you still couldn't compile a rom, you can kill yourself right now because you have no salvation,sorry!
