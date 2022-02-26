@@ -139,7 +139,7 @@ cd out/target/product/A001D
 ls
 ```
 ```bash
-curl --upload-file "$NAMEFORARCHIVEROM.zip"
+curl --upload-file "NAMEFORARCHIVEROM.zip"
 ```
 
 READY! YOU JUST COMPILED YOUR CUSTOM ROM!
