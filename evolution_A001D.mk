@@ -21,12 +21,15 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit from A001D device
 $(call inherit-product, device/asus/A001D/device.mk)
 
-# Inherit some common LineageOS stuff.
-$(call inherit-product, vendor/dot/config/common.mk)
+# Inherit some common AOSP stuff.
+$(call inherit-product, vendor/evolution/config/common_full_phone.mk)
+EVO_DONATE_URL := https://t.me/zmxsh
+EVO_MAINTAINER := JhonatanMikael
+EVO_SUPPORT_URL := https://t.me/jhonnytech
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := A001D
-PRODUCT_NAME := dot_A001D
+PRODUCT_NAME := evolution_A001D
 PRODUCT_BRAND := asus
 PRODUCT_MODEL := ASUS_A001D
 PRODUCT_MANUFACTURER := asus
