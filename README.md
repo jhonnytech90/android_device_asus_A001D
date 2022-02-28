@@ -52,7 +52,7 @@ mkdir potato
 ```bash
 cd potato
 ```
-You now have all the tools you need and can proceed to initialize the DotOS code and device settings. Learn how to do this below:
+You now have all the tools you need and can proceed to initialize the Potato code and device settings. Learn how to do this below:
 
 Configuring Git:
 ================
