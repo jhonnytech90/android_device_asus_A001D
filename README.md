@@ -1,8 +1,7 @@
-# BUILD DOTOS11 FOR A001D
-masternoob tutorial for build dotOS 11
+# BUILD POTATO PROJECT FOR A001D
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/DotOS/resources_drawables/master/dot11/dot_main-banner.png" > 
+<img src="https://raw.githubusercontent.com/PotatoProject/manifest/dumaloo-release/XDAThread/main.png">
 </p>
 
 Prepare your Machine and Java environment:
@@ -48,10 +47,10 @@ export PATH=~/bin:$PATH
 source ~/.bashrc
 ```
 ```bash
-mkdir dot
+mkdir potato
 ```
 ```bash
-cd dot
+cd potato
 ```
 You now have all the tools you need and can proceed to initialize the DotOS code and device settings. Learn how to do this below:
 
@@ -76,7 +75,7 @@ Downloading Source Code:
 To initialize your local repository, use a command like this:
 
 ```bash
-repo init -u git://github.com/DotOS/manifest.git -b dot11
+repo init -u https://github.com/PotatoProject/manifest -b dumaloo-release
 ```
 
 Then to sync up:
@@ -96,21 +95,11 @@ sudo chmod 777 /etc/.repo_gitconfig.json
 Downloading Device Trees:
 ========================
 ```bash
-git clone https://github.com/jhonnytech90/android_device_asus_A001D -b dotOS device/asus/A001D &&
+git clone https://github.com/jhonnytech90/android_device_asus_A001D -b potato device/asus/A001D &&
 git clone https://github.com/jhonnytech90/vendor_asus_A001D -b lineage-18.1 vendor/asus/A001D &&
-git clone https://github.com/jhonnytech90/kernel_asus_A001D -b 11 kernel/asus/A001D
+git clone https://github.com/jhonnytech90/kernel_asus_A001D -b 11 kernel/asus/A001D && git clone https://github.com/syberia-project/platform_hardware_qcom_display.git -b 9.0-caf-8996 hardware/qcom/display-caf/msm8996
 ```
-our device needs a prebuild kernel, to force compatibility I had to edit the DotOS Vendor Source to make it compatible so we will have to download it too, 
-first we will delete the original:
-```bash
-sudo rm -r vendor/dot
-```
-now download the modified:
-```bash
-git clone https://github.com/jhonnytech90/android_vendor_dot -b dot11 vendor/dot
-```
-
-Compilation of DotOS:
+Compilation of Evolution-X:
 ====================
 
 From root directory of Project, perform following commands in terminal to start Compilation.
@@ -131,11 +120,11 @@ source build/envsetup.sh
 ```
 
 ```bash
-lunch dot_A001D-userdebug
+lunch potato_A001D-userdebug
 ```
 
 ```bash
-make bacon -J8
+brunch A001D
 ```
 
 If you still couldn't compile a rom, you can kill yourself right now because you have no salvation,sorry!
