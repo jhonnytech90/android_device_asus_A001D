@@ -1,6 +1,6 @@
 # BUILD POTATO PROJECT FOR A001D
 
-<p align="center">
+<p align="right">
 <img src="https://raw.githubusercontent.com/PotatoProject/manifest/dumaloo-release/XDAThread/main.png">
 </p>
 
