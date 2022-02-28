@@ -1,5 +1,4 @@
 # BUILD EVOLUTION-X FOR A001D
-tutorial for build eovx-11
 
 <p align="center">
 <img src="https://github.com/Evolution-X/manifest/raw/elle/EvoBanner.png" > 
