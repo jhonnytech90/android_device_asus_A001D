@@ -99,6 +99,15 @@ git clone https://github.com/jhonnytech90/android_device_asus_A001D -b potato de
 git clone https://github.com/jhonnytech90/vendor_asus_A001D -b lineage-18.1 vendor/asus/A001D &&
 git clone https://github.com/jhonnytech90/kernel_asus_A001D -b 11 kernel/asus/A001D && git clone https://github.com/syberia-project/platform_hardware_qcom_display.git -b 9.0-caf-8996 hardware/qcom/display-caf/msm8996
 ```
+our device needs a prebuild kernel, to force compatibility I had to edit the POSP Vendor Source to make it compatible so we will have to download it too, 
+first we will delete the original:
+```bash
+sudo rm -r vendor/dot
+```
+now download the modified:
+```bash
+git clone https://github.com/jhonnytech90/vendor_potato -b dumaloo-release vendor/potato
+```
 Compilation of POTATO PROJECT:
 ====================
 
