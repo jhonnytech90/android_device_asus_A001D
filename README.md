@@ -102,7 +102,7 @@ git clone https://github.com/jhonnytech90/kernel_asus_A001D -b 11 kernel/asus/A0
 our device needs a prebuild kernel, to force compatibility I had to edit the POSP Vendor Source to make it compatible so we will have to download it too, 
 first we will delete the original:
 ```bash
-sudo rm -r vendor/dot
+sudo rm -r vendor/potato
 ```
 now download the modified:
 ```bash
