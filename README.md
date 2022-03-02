@@ -105,10 +105,10 @@ sudo rm -r vendor/corvus
 ```
 now download the modified:
 ```bash
-git clone https://github.com/jhonnytech90/corvus_dot -b corvus vendor/corvus
+git clone https://github.com/jhonnytech90/vendor_corvus -b 11-final vendor/corvus
 ```
 
-Compilation of DotOS:
+Compilation of CorvusOS:
 ====================
 
 From root directory of Project, perform following commands in terminal to start Compilation.
