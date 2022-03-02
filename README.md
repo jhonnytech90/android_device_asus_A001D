@@ -1,8 +1,7 @@
 # BUILD COSRVUS-OS FOR A001D
 
+![CorvusROM](https://raw.githubusercontent.com/Astile97/extras/master/corvus/cover.PNG)
 <p align="center">
-<img src="https://raw.githubusercontent.com/DotOS/resources_drawables/master/dot11/dot_main-banner.png" > 
-</p>
 
 Prepare your Machine and Java environment:
 ========================
