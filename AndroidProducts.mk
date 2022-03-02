@@ -14,4 +14,4 @@
 # limitations under the License.
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/dot_A001D.mk
+    $(LOCAL_DIR)/corvus_A001D.mk
