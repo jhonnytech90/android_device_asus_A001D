@@ -24,6 +24,15 @@ $(call inherit-product, device/asus/A001D/device.mk)
 # Inherit some common LineageOS stuff.
 $(call inherit-product, vendor/dot/config/common.mk)
 
+# Pixel Charger
+TARGET_INCLUDE_PIXEL_CHARGER := true
+
+# Bootanimation Resolution
+TARGET_BOOT_ANIMATION_RES := 1080
+
+# FaceUnlock
+TARGET_FACE_UNLOCK_SUPPORTED := true
+
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := A001D
 PRODUCT_NAME := dot_A001D
