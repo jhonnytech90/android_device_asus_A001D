@@ -1,4 +1,4 @@
-# BUILD COSRVUS-OS FOR A001D
+# BUILD CORVUS-OS FOR A001D
 
 ![CorvusROM](https://raw.githubusercontent.com/Astile97/extras/master/corvus/cover.PNG)
 <p align="center">
@@ -74,7 +74,7 @@ Downloading Source Code:
 To initialize your local repository, use a command like this:
 
 ```bash
-repo init --depth=1 -u https://github.com/Corvus-R/android_manifest.git -b 11
+repo init --depth=1 -u https://github.com/Corvus-AOSP/android_manifest.git -b 11
 ```
 
 Then to sync up:
