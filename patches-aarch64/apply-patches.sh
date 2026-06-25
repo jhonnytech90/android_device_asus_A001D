@@ -3,7 +3,7 @@
 # Detecta AARCH64 e pula patches x86-incompativeis em VM Intel
 set -e
 
-BASE="$(cd "$(dirname "$0")/../../.."; pwd)"
+BASE="$(cd "$(dirname "$0")/../../../.."; pwd)"
 PATCHES="$(dirname "$0")"
 ARCH="$(uname -m)"
 
