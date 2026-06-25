@@ -1,0 +1,1228 @@
+diff --git a/core/envsetup.mk b/core/envsetup.mk
+index 9e722bd..dd1b5f3 100644
+--- a/core/envsetup.mk
++++ b/core/envsetup.mk
+@@ -139,7 +139,7 @@ $(error Unable to determine HOST_OS from uname -sm: $(UNAME)!)
+ endif
+ 
+ # HOST_ARCH
+-ifneq (,$(findstring x86_64,$(UNAME)))
++ifneq (,$(findstring x86_64,$(UNAME))$(findstring aarch64,$(UNAME)))
+   HOST_ARCH := x86_64
+   HOST_2ND_ARCH := x86
+   HOST_IS_64_BIT := true
+diff --git a/core/tasks/check_boot_jars/check_boot_jars.py b/core/tasks/check_boot_jars/check_boot_jars.py
+index 9d71553..660a319 100755
+--- a/core/tasks/check_boot_jars/check_boot_jars.py
++++ b/core/tasks/check_boot_jars/check_boot_jars.py
+@@ -55,16 +55,16 @@ def CheckJar(whitelist_path, jar):
+       package_name = package_name.replace('/', '.')
+       # Skip class without a package name
+       if package_name and not whitelist_re.match(package_name):
+-        print >> sys.stderr, ('Error: %s contains class file %s, whose package name %s is not '
+-                              'in the whitelist %s of packages allowed on the bootclasspath.'
+-                              % (jar, f, package_name, whitelist_path))
++        print('Error: %s contains class file %s, whose package name %s is not '
++              'in the whitelist %s of packages allowed on the bootclasspath.'
++              % (jar, f, package_name, whitelist_path), file=sys.stderr)
+         return False
+   return True
+ 
+ 
+ def main(argv):
+   if len(argv) < 2:
+-    print __doc__
++    print(__doc__)
+     return 1
+   whitelist_path = argv[0]
+ 
+diff --git a/tools/auto_gen_test_config.py b/tools/auto_gen_test_config.py
+index c7c5bdc..8c8f008 100755
+--- a/tools/auto_gen_test_config.py
++++ b/tools/auto_gen_test_config.py
+@@ -64,7 +64,7 @@ def main(argv):
+   module = os.path.splitext(os.path.basename(target_config))[0]
+   instrumentation = instrumentation_elements[0]
+   manifest = manifest_elements[0]
+-  if instrumentation.attributes.has_key(ATTRIBUTE_LABEL):
++  if instrumentation.attributesATTRIBUTE_LABEL in self:
+     label = instrumentation.attributes[ATTRIBUTE_LABEL].value
+   else:
+     label = module
+diff --git a/tools/check_elf_file.py b/tools/check_elf_file.py
+index de855c6..0196e82 100755
+--- a/tools/check_elf_file.py
++++ b/tools/check_elf_file.py
+@@ -460,7 +460,7 @@ class Checker(object):
+     """Check whether all undefined symbols are resolved to a definition."""
+     all_elf_files = [self._file_under_test] + self._shared_libs
+     missing_symbols = []
+-    for sym, imported_vers in self._file_under_test.imported.iteritems():
++    for sym, imported_vers in self._file_under_test.imported.items():
+       for imported_ver in imported_vers:
+         lib = self._find_symbol_from_libs(all_elf_files, sym, imported_ver)
+         if not lib:
+diff --git a/tools/check_radio_versions.py b/tools/check_radio_versions.py
+index ebe621f..7149f71 100755
+--- a/tools/check_radio_versions.py
++++ b/tools/check_radio_versions.py
+@@ -52,8 +52,8 @@ for item in sys.argv[2:]:
+   try:
+     f = open(fn + ".sha1")
+   except IOError:
+-    if not bad: print
+-    print "*** Error opening \"%s.sha1\"; can't verify %s" % (fn, key)
++    if not bad: print()
++    print(("*** Error opening \"%s.sha1\"; can't verify %s" % (fn, key)))
+     bad = True
+     continue
+   for line in f:
+@@ -63,17 +63,17 @@ for item in sys.argv[2:]:
+     versions[h] = v
+ 
+   if digest not in versions:
+-    if not bad: print
+-    print "*** SHA-1 hash of \"%s\" doesn't appear in \"%s.sha1\"" % (fn, fn)
++    if not bad: print()
++    print(("*** SHA-1 hash of \"%s\" doesn't appear in \"%s.sha1\"" % (fn, fn)))
+     bad = True
+     continue
+ 
+   if versions[digest] not in values:
+-    if not bad: print
+-    print "*** \"%s\" is version %s; not any %s allowed by \"%s\"." % (
+-        fn, versions[digest], key, sys.argv[1])
++    if not bad: print()
++    print(("*** \"%s\" is version %s; not any %s allowed by \"%s\"." % (
++        fn, versions[digest], key, sys.argv[1])))
+     bad = True
+ 
+ if bad:
+-  print
++  print()
+   sys.exit(1)
+diff --git a/tools/checkowners.py b/tools/checkowners.py
+index d6853d8..9725a43 100755
+--- a/tools/checkowners.py
++++ b/tools/checkowners.py
+@@ -6,7 +6,9 @@ import argparse
+ import re
+ import sys
+ import urllib
+-import urllib2
++import urllib.request
++import urllib.error
++urllib2 = urllib.request
+ 
+ parser = argparse.ArgumentParser(description='Check OWNERS file syntax')
+ parser.add_argument('-v', '--verbose', dest='verbose',
+@@ -25,7 +27,7 @@ checked_addresses = {}
+ 
+ def echo(msg):
+   if args.verbose:
+-    print msg
++    print(msg)
+ 
+ 
+ def find_address(address):
+@@ -43,7 +45,7 @@ def find_address(address):
+ def check_address(fname, num, address):
+   if find_address(address):
+     return 0
+-  print '%s:%d: ERROR: unknown email address: %s' % (fname, num, address)
++  print('%s:%d: ERROR: unknown email address: %s' % (fname, num, address))
+   return 1
+ 
+ 
+@@ -72,7 +74,7 @@ def main():
+       stripped_line = re.sub('#.*$', '', line).strip()
+       if not patterns.match(stripped_line):
+         error += 1
+-        print '%s:%d: ERROR: unknown line [%s]' % (fname, num, line.strip())
++        print('%s:%d: ERROR: unknown line [%s]' % (fname, num, line.strip()))
+       elif args.check_address:
+         if perfile_pattern.match(stripped_line):
+           for addr in perfile_pattern.match(stripped_line).group(1).split(','):
+diff --git a/tools/compare_fileslist.py b/tools/compare_fileslist.py
+index 1f507d8..5547154 100755
+--- a/tools/compare_fileslist.py
++++ b/tools/compare_fileslist.py
+@@ -33,27 +33,27 @@ def main(argv):
+   data = {}
+   index = 0
+   for input in inputs:
+-    f = file(input, "r")
++    f = open(input, "r")
+     lines = f.readlines()
+     f.close()
+     lines = map(string.split, lines)
+-    lines = map(lambda (x,y): (y,int(x)), lines)
++    lines = map(lambda xy: (xy[1],int(xy[0])), lines)
+     for fn,sz in lines:
+-      if not data.has_key(fn):
++      if not datafn in self:
+         data[fn] = {}
+       data[fn][index] = sz
+     index = index + 1
+   rows = []
+-  for fn,sizes in data.iteritems():
++  for fn,sizes in list(data.items()):
+     row = [fn]
+     for i in range(0,index):
+-      if sizes.has_key(i):
++      if sizesi in self:
+         row.append(sizes[i])
+       else:
+         row.append(None)
+     rows.append(row)
+   rows = sorted(rows, key=lambda x: x[0])
+-  print """<html>
++  print("""<html>
+     <head>
+       <style type="text/css">
+         .fn, .sz, .z, .d {
+@@ -78,27 +78,27 @@ def main(argv):
+       </style>
+     </head>
+     <body>
+-  """
+-  print "<table>"
+-  print "<tr>"
++  """)
++  print("<table>")
++  print("<tr>")
+   for input in inputs:
+     combo = input.split(os.path.sep)[1]
+-    print "  <td class='fn'>%s</td>" % cgi.escape(combo)
+-  print "</tr>"
++    print(("  <td class='fn'>%s</td>" % cgi.escape(combo)))
++  print("</tr>")
+ 
+   for row in rows:
+-    print "<tr>"
++    print("<tr>")
+     for sz in row[1:]:
+       if not sz:
+-        print "  <td class='z'>&nbsp;</td>"
++        print("  <td class='z'>&nbsp;</td>")
+       elif IsDifferent(row[1:]):
+-        print "  <td class='d'>%d</td>" % sz
++        print(("  <td class='d'>%d</td>" % sz))
+       else:
+-        print "  <td class='sz'>%d</td>" % sz
+-    print "  <td class='fn'>%s</td>" % cgi.escape(row[0])
+-    print "</tr>"
+-  print "</table>"
+-  print "</body></html>"
++        print(("  <td class='sz'>%d</td>" % sz))
++    print(("  <td class='fn'>%s</td>" % cgi.escape(row[0])))
++    print("</tr>")
++  print("</table>")
++  print("</body></html>")
+ 
+ if __name__ == '__main__':
+   main(sys.argv)
+diff --git a/tools/event_log_tags.py b/tools/event_log_tags.py
+index 645839e..a191fe3 100644
+--- a/tools/event_log_tags.py
++++ b/tools/event_log_tags.py
+@@ -54,8 +54,8 @@ class TagFile(object):
+ 
+     if file_object is None:
+       try:
+-        file_object = open(filename, "rb")
+-      except (IOError, OSError), e:
++        file_object = open(filename, "r", encoding="utf-8", errors="replace")
++      except (IOError, OSError) as e:
+         self.AddError(str(e))
+         return
+ 
+@@ -100,7 +100,7 @@ class TagFile(object):
+ 
+         self.tags.append(Tag(tag, tagname, description,
+                              self.filename, self.linenum))
+-    except (IOError, OSError), e:
++    except (IOError, OSError) as e:
+       self.AddError(str(e))
+ 
+ 
+@@ -127,9 +127,9 @@ def WriteOutput(output_file, data):
+       out = sys.stdout
+       output_file = "<stdout>"
+     else:
+-      out = open(output_file, "wb")
++      out = open(output_file, "w", encoding="utf-8")
+     out.write(data)
+     out.close()
+-  except (IOError, OSError), e:
+-    print >> sys.stderr, "failed to write %s: %s" % (output_file, e)
++  except (IOError, OSError) as e:
++    print("failed to write %s: %s" % (output_file, e), file=sys.stderr)
+     sys.exit(1)
+diff --git a/tools/fileslist_util.py b/tools/fileslist_util.py
+index ff40d51..196951a 100755
+--- a/tools/fileslist_util.py
++++ b/tools/fileslist_util.py
+@@ -27,7 +27,7 @@ def PrintCanonicalList(path):
+   with open(path) as jf:
+     data = json.load(jf)
+   for line in data:
+-    print "{0:12d}  {1}".format(line["Size"], line["Name"])
++    print("{0:12d}  {1}".format(line["Size"], line["Name"]))
+ 
+ def PrintUsage(name):
+   print("""
+@@ -39,7 +39,7 @@ Usage: %s -[nc] json_files_list
+ def main(argv):
+   try:
+     opts, args = getopt.getopt(argv[1:], "nc", "")
+-  except getopt.GetoptError, err:
++  except getopt.GetoptError as err:
+     print(err)
+     PrintUsage(argv[0])
+     sys.exit(2)
+diff --git a/tools/filter-product-graph.py b/tools/filter-product-graph.py
+index b3a5b42..8351694 100755
+--- a/tools/filter-product-graph.py
++++ b/tools/filter-product-graph.py
+@@ -55,13 +55,13 @@ def main():
+     deps = [dep for dep in deps if dep[1] in included]
+     infos = [info for info in infos if info[0] in included]
+ 
+-  print "digraph {"
+-  print "graph [ ratio=.5 ];"
++  print("digraph {")
++  print("graph [ ratio=.5 ];")
+   for dep in deps:
+-    print '"%s" -> "%s"' % dep
++    print('"%s" -> "%s"' % dep)
+   for info in infos:
+-    print '"%s"%s' % info
+-  print "}"
++    print('"%s"%s' % info)
++  print("}")
+ 
+ 
+ if __name__ == "__main__":
+diff --git a/tools/findleaves.py b/tools/findleaves.py
+index 97302e9..da5fd36 100755
+--- a/tools/findleaves.py
++++ b/tools/findleaves.py
+@@ -121,7 +121,7 @@ def main(argv):
+   results = list(set(perform_find(mindepth, prune, dirlist, filenames)))
+   results.sort()
+   for r in results:
+-    print r
++    print(r)
+ 
+ if __name__ == "__main__":
+   main(sys.argv)
+diff --git a/tools/fs_config/fs_config_generator.py b/tools/fs_config/fs_config_generator.py
+index 109b29a..6025de4 100755
+--- a/tools/fs_config/fs_config_generator.py
++++ b/tools/fs_config/fs_config_generator.py
+@@ -11,7 +11,7 @@ Further documentation can be found in the README.
+ """
+ 
+ import argparse
+-import ConfigParser
++import configparser as ConfigParser
+ import ctypes
+ import re
+ import sys
+@@ -478,7 +478,7 @@ class AIDHeaderParser(object):
+         # tuplefy the lists since range() does not like them mutable.
+         self._oem_ranges = [
+             AIDHeaderParser._convert_lst_to_tup(k, v)
+-            for k, v in self._oem_ranges.iteritems()
++            for k, v in self._oem_ranges.items()
+         ]
+ 
+         # Check for overlapping ranges
+@@ -490,12 +490,12 @@ class AIDHeaderParser(object):
+ 
+         # No core AIDs should be within any oem range.
+         for aid in self._aid_value_to_name:
+-
+-            if Utils.in_any_range(aid, self._oem_ranges):
++            aid_int = int(aid, 0)
++            if Utils.in_any_range(aid_int, self._oem_ranges):
+                 name = self._aid_value_to_name[aid]
+                 raise ValueError(
+                     'AID "%s" value: %u within reserved OEM Range: "%s"' %
+-                    (name, aid, str(self._oem_ranges)))
++                    (name, aid_int, str(self._oem_ranges)))
+ 
+     @property
+     def oem_ranges(self):
+@@ -1117,7 +1117,7 @@ class FSConfigGen(BaseGenerator):
+         user_binary = bytearray(ctypes.c_uint16(int(user, 0)))
+         group_binary = bytearray(ctypes.c_uint16(int(group, 0)))
+         caps_binary = bytearray(ctypes.c_uint64(caps_value))
+-        path_binary = ctypes.create_string_buffer(path,
++        path_binary = ctypes.create_string_buffer(path.encode("utf-8") if isinstance(path, str) else path,
+                                                   path_length_aligned_64).raw
+ 
+         out_file.write(length_binary)
+@@ -1213,21 +1213,21 @@ class AIDArrayGen(BaseGenerator):
+         hdr = AIDHeaderParser(args['hdrfile'])
+         max_name_length = max(len(aid.friendly) + 1 for aid in hdr.aids)
+ 
+-        print AIDArrayGen._GENERATED
+-        print
+-        print AIDArrayGen._INCLUDE
+-        print
+-        print AIDArrayGen._STRUCT_FS_CONFIG % max_name_length
+-        print
+-        print AIDArrayGen._OPEN_ID_ARRAY
++        print(AIDArrayGen._GENERATED)
++        print()
++        print(AIDArrayGen._INCLUDE)
++        print()
++        print(AIDArrayGen._STRUCT_FS_CONFIG % max_name_length)
++        print()
++        print(AIDArrayGen._OPEN_ID_ARRAY)
+ 
+         for aid in hdr.aids:
+-            print AIDArrayGen._ID_ENTRY % (aid.friendly, aid.identifier)
++            print(AIDArrayGen._ID_ENTRY % (aid.friendly, aid.identifier))
+ 
+-        print AIDArrayGen._CLOSE_FILE_STRUCT
+-        print
+-        print AIDArrayGen._COUNT
+-        print
++        print(AIDArrayGen._CLOSE_FILE_STRUCT)
++        print()
++        print(AIDArrayGen._COUNT)
++        print()
+ 
+ 
+ @generator('oemaid')
+@@ -1269,15 +1269,15 @@ class OEMAidGen(BaseGenerator):
+ 
+         parser = FSConfigFileParser(args['fsconfig'], hdr_parser.oem_ranges)
+ 
+-        print OEMAidGen._GENERATED
++        print(OEMAidGen._GENERATED)
+ 
+-        print OEMAidGen._FILE_IFNDEF_DEFINE
++        print(OEMAidGen._FILE_IFNDEF_DEFINE)
+ 
+         for aid in parser.aids:
+             self._print_aid(aid)
+-            print
++            print()
+ 
+-        print OEMAidGen._FILE_ENDIF
++        print(OEMAidGen._FILE_ENDIF)
+ 
+     def _print_aid(self, aid):
+         """Prints a valid #define AID identifier to stdout.
+@@ -1289,10 +1289,10 @@ class OEMAidGen(BaseGenerator):
+         # print the source file location of the AID
+         found_file = aid.found
+         if found_file != self._old_file:
+-            print OEMAidGen._FILE_COMMENT % found_file
++            print(OEMAidGen._FILE_COMMENT % found_file)
+             self._old_file = found_file
+ 
+-        print OEMAidGen._GENERIC_DEFINE % (aid.identifier, aid.value)
++        print(OEMAidGen._GENERIC_DEFINE % (aid.identifier, aid.value))
+ 
+ 
+ @generator('passwd')
+@@ -1364,7 +1364,7 @@ class PasswdGen(BaseGenerator):
+         except ValueError as exception:
+             sys.exit(exception)
+ 
+-        print "%s::%s:%s::/:%s" % (logon, uid, uid, aid.login_shell)
++        print("%s::%s:%s::/:%s" % (logon, uid, uid, aid.login_shell))
+ 
+ 
+ @generator('group')
+@@ -1389,7 +1389,7 @@ class GroupGen(PasswdGen):
+         except ValueError as exception:
+             sys.exit(exception)
+ 
+-        print "%s::%s:" % (logon, uid)
++        print("%s::%s:" % (logon, uid))
+ 
+ 
+ @generator('print')
+@@ -1412,7 +1412,7 @@ class PrintGen(BaseGenerator):
+         aids.sort(key=lambda item: int(item.normalized_value))
+ 
+         for aid in aids:
+-            print '%s %s' % (aid.identifier, aid.normalized_value)
++            print('%s %s' % (aid.identifier, aid.normalized_value))
+ 
+ 
+ def main():
+@@ -1426,7 +1426,7 @@ def main():
+     gens = generator.get()
+ 
+     # for each gen, instantiate and add them as an option
+-    for name, gen in gens.iteritems():
++    for name, gen in gens.items():
+ 
+         generator_option_parser = subparser.add_parser(name, help=gen.__doc__)
+         generator_option_parser.set_defaults(which=name)
+diff --git a/tools/generate-notice-files.py b/tools/generate-notice-files.py
+index 49011b2..d625223 100755
+--- a/tools/generate-notice-files.py
++++ b/tools/generate-notice-files.py
+@@ -42,6 +42,7 @@ HTML_ESCAPE_TABLE = {
+     }
+ 
+ def hexify(s):
++    if isinstance(s, bytes): return s.hex()
+     return ("%02x"*len(s)) % tuple(map(ord, s))
+ 
+ def md5sum(filename):
+@@ -57,7 +58,7 @@ def md5sum(filename):
+             break
+         sum.update(block)
+     f.close()
+-    return hexify(sum.digest())
++    return sum.hexdigest()
+ 
+ 
+ def html_escape(text):
+@@ -88,15 +89,15 @@ def combine_notice_files_html(file_hash, input_dir, output_filename):
+         id_count += 1
+ 
+     # Open the output file, and output the header pieces
+-    output_file = open(output_filename, "wb")
++    output_file = open(output_filename, "w", encoding="utf-8")
+ 
+-    print >> output_file, "<html><head>"
+-    print >> output_file, HTML_OUTPUT_CSS
+-    print >> output_file, '</head><body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0">'
++    print("<html><head>", file=output_file)
++    print(HTML_OUTPUT_CSS, file=output_file)
++    print('</head><body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0">', file=output_file)
+ 
+     # Output our table of contents
+-    print >> output_file, '<div class="toc">'
+-    print >> output_file, "<ul>"
++    print('<div class="toc">', file=output_file)
++    print("<ul>", file=output_file)
+ 
+     # Flatten the list of lists into a single list of filenames
+     sorted_filenames = sorted(itertools.chain.from_iterable(file_hash))
+@@ -104,46 +105,45 @@ def combine_notice_files_html(file_hash, input_dir, output_filename):
+     # Print out a nice table of contents
+     for filename in sorted_filenames:
+         stripped_filename = SRC_DIR_STRIP_RE.sub(r"\1", filename)
+-        print >> output_file, '<li><a href="#id%d">%s</a></li>' % (id_table.get(filename), stripped_filename)
++        print('<li><a href="#id%d">%s</a></li>' % (id_table.get(filename), stripped_filename), file=output_file)
+ 
+-    print >> output_file, "</ul>"
+-    print >> output_file, "</div><!-- table of contents -->"
++    print("</ul>", file=output_file)
++    print("</div><!-- table of contents -->", file=output_file)
+     # Output the individual notice file lists
+-    print >>output_file, '<table cellpadding="0" cellspacing="0" border="0">'
++    print('<table cellpadding="0" cellspacing="0" border="0">', file=output_file)
+     for value in file_hash:
+-        print >> output_file, '<tr id="id%d"><td class="same-license">' % id_table.get(value[0])
+-        print >> output_file, '<div class="label">Notices for file(s):</div>'
+-        print >> output_file, '<div class="file-list">'
++        print('<tr id="id%d"><td class="same-license">' % id_table.get(value[0]), file=output_file)
++        print('<div class="label">Notices for file(s):</div>', file=output_file)
++        print('<div class="file-list">', file=output_file)
+         for filename in value:
+-            print >> output_file, "%s <br/>" % (SRC_DIR_STRIP_RE.sub(r"\1", filename))
+-        print >> output_file, "</div><!-- file-list -->"
+-        print >> output_file
+-        print >> output_file, '<pre class="license-text">'
+-        print >> output_file, html_escape(open(value[0]).read())
+-        print >> output_file, "</pre><!-- license-text -->"
+-        print >> output_file, "</td></tr><!-- same-license -->"
+-        print >> output_file
+-        print >> output_file
+-        print >> output_file
+-
++            print("%s <br/>" % (SRC_DIR_STRIP_RE.sub(r"\1", filename)), file=output_file)
++        print("</div><!-- file-list -->", file=output_file)
++        print(file=output_file)
++        print('<pre class="license-text">', file=output_file)
++        print(html_escape(open(value[0]).read()), file=output_file)
++        print("</pre><!-- license-text -->", file=output_file)
++        print("</td></tr><!-- same-license -->", file=output_file)
++        print(file=output_file)
++        print(file=output_file)
++        print(file=output_file)
+     # Finish off the file output
+-    print >> output_file, "</table>"
+-    print >> output_file, "</body></html>"
++    print("</table>", file=output_file)
++    print("</body></html>", file=output_file)
+     output_file.close()
+ 
+ def combine_notice_files_text(file_hash, input_dir, output_filename, file_title):
+     """Combine notice files in FILE_HASH and output a text version to OUTPUT_FILENAME."""
+ 
+     SRC_DIR_STRIP_RE = re.compile(input_dir + "(/.*).txt")
+-    output_file = open(output_filename, "wb")
+-    print >> output_file, file_title
++    output_file = open(output_filename, "w", encoding="utf-8")
++    print(file_title, file=output_file)
+     for value in file_hash:
+-      print >> output_file, "============================================================"
+-      print >> output_file, "Notices for file(s):"
++      print("============================================================", file=output_file)
++      print("Notices for file(s):", file=output_file)
+       for filename in value:
+-        print >> output_file, SRC_DIR_STRIP_RE.sub(r"\1", filename)
+-      print >> output_file, "------------------------------------------------------------"
+-      print >> output_file, open(value[0]).read()
++        print(SRC_DIR_STRIP_RE.sub(r"\1", filename), file=output_file)
++      print("------------------------------------------------------------", file=output_file)
++      print(open(value[0]).read(), file=output_file)
+     output_file.close()
+ 
+ def combine_notice_files_xml(files_with_same_hash, input_dir, output_filename):
+@@ -159,10 +159,10 @@ def combine_notice_files_xml(files_with_same_hash, input_dir, output_filename):
+              id_table[filename] = file_key
+ 
+     # Open the output file, and output the header pieces
+-    output_file = open(output_filename, "wb")
++    output_file = open(output_filename, "w", encoding="utf-8")
+ 
+-    print >> output_file, '<?xml version="1.0" encoding="utf-8"?>'
+-    print >> output_file, "<licenses>"
++    print('<?xml version="1.0" encoding="utf-8"?>', file=output_file)
++    print("<licenses>", file=output_file)
+ 
+     # Flatten the list of lists into a single list of filenames
+     sorted_filenames = sorted(id_table.keys())
+@@ -170,11 +170,10 @@ def combine_notice_files_xml(files_with_same_hash, input_dir, output_filename):
+     # Print out a nice table of contents
+     for filename in sorted_filenames:
+         stripped_filename = SRC_DIR_STRIP_RE.sub(r"\1", filename)
+-        print >> output_file, '<file-name contentId="%s">%s</file-name>' % (id_table.get(filename), stripped_filename)
+-
+-    print >> output_file
+-    print >> output_file
++        print('<file-name contentId="%s">%s</file-name>' % (id_table.get(filename), stripped_filename), file=output_file)
+ 
++    print(file=output_file)
++    print(file=output_file)
+     processed_file_keys = []
+     # Output the individual notice file lists
+     for filename in sorted_filenames:
+@@ -183,11 +182,10 @@ def combine_notice_files_xml(files_with_same_hash, input_dir, output_filename):
+             continue
+         processed_file_keys.append(file_key)
+ 
+-        print >> output_file, '<file-content contentId="%s"><![CDATA[%s]]></file-content>' % (file_key, html_escape(open(filename).read()))
+-        print >> output_file
+-
++        print('<file-content contentId="%s"><![CDATA[%s]]></file-content>' % (file_key, html_escape(open(filename).read())), file=output_file)
++        print(file=output_file)
+     # Finish off the file output
+-    print >> output_file, "</licenses>"
++    print("</licenses>", file=output_file)
+     output_file.close()
+ 
+ def get_args():
+diff --git a/tools/java-event-log-tags.py b/tools/java-event-log-tags.py
+index 37cd712..6a19b97 100755
+--- a/tools/java-event-log-tags.py
++++ b/tools/java-event-log-tags.py
+@@ -23,7 +23,8 @@ tags in the given input file.
+ -h to display this usage message and exit.
+ """
+ 
+-import cStringIO
++from io import StringIO as _StringIO
++import sys as _sys
+ import getopt
+ import os
+ import os.path
+@@ -36,24 +37,24 @@ output_file = None
+ 
+ try:
+   opts, args = getopt.getopt(sys.argv[1:], "ho:")
+-except getopt.GetoptError, err:
+-  print str(err)
+-  print __doc__
++except getopt.GetoptError as err:
++  print(str(err))
++  print(__doc__)
+   sys.exit(2)
+ 
+ for o, a in opts:
+   if o == "-h":
+-    print __doc__
++    print(__doc__)
+     sys.exit(2)
+   elif o == "-o":
+     output_file = a
+   else:
+-    print >> sys.stderr, "unhandled option %s" % (o,)
++    print("unhandled option %s" % (o,), file=sys.stderr)
+     sys.exit(1)
+ 
+ if len(args) != 1 and len(args) != 2:
+-  print "need one or two input files, not %d" % (len(args),)
+-  print __doc__
++  print("need one or two input files, not %d" % (len(args),))
++  print(__doc__)
+   sys.exit(1)
+ 
+ fn = args[0]
+@@ -92,10 +93,10 @@ if "javadoc_hide" in tagfile.options:
+ 
+ if tagfile.errors:
+   for fn, ln, msg in tagfile.errors:
+-    print >> sys.stderr, "%s:%d: error: %s" % (fn, ln, msg)
++    print("%s:%d: error: %s" % (fn, ln, msg), file=sys.stderr)
+   sys.exit(1)
+ 
+-buffer = cStringIO.StringIO()
++buffer = _StringIO()
+ buffer.write("/* This file is auto-generated.  DO NOT MODIFY.\n"
+              " * Source file: %s\n"
+              " */\n\n" % (fn,))
+diff --git a/tools/java-layers.py b/tools/java-layers.py
+index b3aec2b..26e4df7 100755
+--- a/tools/java-layers.py
++++ b/tools/java-layers.py
+@@ -69,27 +69,27 @@ class Dependencies:
+         if upper in deps:
+           recurse(obj, deps[upper], visited)
+     self.deps = deps
+-    self.parts = [(dep.lower.split('.'),dep) for dep in deps.itervalues()]
++    self.parts = [(dep.lower.split('.'),dep) for dep in deps.values()]
+     # transitive closure of dependencies
+-    for dep in deps.itervalues():
++    for dep in deps.values():
+       recurse(dep, dep, [])
+     # disallow everything from the low level components
+-    for dep in deps.itervalues():
++    for dep in deps.values():
+       if dep.lowlevel:
+-        for d in deps.itervalues():
++        for d in deps.values():
+           if dep != d and not d.legacy:
+             dep.transitive.add(d.lower)
+     # disallow the 'top' components everywhere but in their own package
+-    for dep in deps.itervalues():
++    for dep in deps.values():
+       if dep.top and not dep.legacy:
+-        for d in deps.itervalues():
++        for d in deps.values():
+           if dep != d and not d.legacy:
+             d.transitive.add(dep.lower)
+-    for dep in deps.itervalues():
++    for dep in deps.values():
+       dep.transitive = set([x+"." for x in dep.transitive])
+     if False:
+-      for dep in deps.itervalues():
+-        print "-->", dep.lower, "-->", dep.transitive
++      for dep in deps.values():
++        print("-->", dep.lower, "-->", dep.transitive)
+ 
+   # Lookup the dep object for the given package.  If pkg is a subpackage
+   # of one with a rule, that one will be returned.  If no matches are found,
+@@ -218,8 +218,8 @@ def examine_java_file(deps, filename):
+     imports.append(m.group(1))
+   # Do the checking
+   if False:
+-    print filename
+-    print "'%s' --> %s" % (pkg, imports)
++    print(filename)
++    print("'%s' --> %s" % (pkg, imports))
+   dep = deps.lookup(pkg)
+   if not dep:
+     sys.stderr.write(("%s: Error: Package does not appear in dependency file: "
+diff --git a/tools/merge-event-log-tags.py b/tools/merge-event-log-tags.py
+index 64bad3f..988dde6 100755
+--- a/tools/merge-event-log-tags.py
++++ b/tools/merge-event-log-tags.py
+@@ -24,7 +24,8 @@ and fails if they do.
+ -h to display this usage message and exit.
+ """
+ 
+-import cStringIO
++from io import StringIO as _StringIO
++import sys as _sys
+ import getopt
+ try:
+   import hashlib
+@@ -48,21 +49,21 @@ ASSIGN_LIMIT = 1000000
+ 
+ try:
+   opts, args = getopt.getopt(sys.argv[1:], "ho:m:")
+-except getopt.GetoptError, err:
+-  print str(err)
+-  print __doc__
++except getopt.GetoptError as err:
++  print(str(err))
++  print(__doc__)
+   sys.exit(2)
+ 
+ for o, a in opts:
+   if o == "-h":
+-    print __doc__
++    print(__doc__)
+     sys.exit(2)
+   elif o == "-o":
+     output_file = a
+   elif o == "-m":
+     pre_merged_file = a
+   else:
+-    print >> sys.stderr, "unhandled option %s" % (o,)
++    print("unhandled option %s" % (o,), file=sys.stderr)
+     sys.exit(1)
+ 
+ # Restrictions on tags:
+@@ -133,12 +134,12 @@ for fn in args:
+ 
+ if errors:
+   for fn, ln, msg in errors:
+-    print >> sys.stderr, "%s:%d: error: %s" % (fn, ln, msg)
++    print("%s:%d: error: %s" % (fn, ln, msg), file=sys.stderr)
+   sys.exit(1)
+ 
+ if warnings:
+   for fn, ln, msg in warnings:
+-    print >> sys.stderr, "%s:%d: warning: %s" % (fn, ln, msg)
++    print("%s:%d: warning: %s" % (fn, ln, msg), file=sys.stderr)
+ 
+ # Python's hash function (a) isn't great and (b) varies between
+ # versions of python.  Using md5 is overkill here but is the same from
+@@ -154,14 +155,14 @@ def hashname(str):
+ # If we were provided pre-merged tags (w/ the -m option), then don't
+ # ever try to allocate one, just fail if we don't have a number
+ 
+-for name, t in sorted(by_tagname.iteritems()):
++for name, t in sorted(by_tagname.items()):
+   if t.tagnum is None:
+     if pre_merged_tags:
+       try:
+         t.tagnum = pre_merged_tags[t.tagname]
+       except KeyError:
+-        print >> sys.stderr, ("Error: Tag number not defined for tag `%s'."
+-            +" Have you done a full build?") % t.tagname
++        print(("Error: Tag number not defined for tag `%s'." +
++            " Have you done a full build?") % t.tagname, file=sys.stderr)
+         sys.exit(1)
+     else:
+       while True:
+@@ -174,8 +175,8 @@ for name, t in sorted(by_tagname.iteritems()):
+ 
+ # by_tagnum should be complete now; we've assigned numbers to all tags.
+ 
+-buffer = cStringIO.StringIO()
+-for n, t in sorted(by_tagnum.iteritems()):
++buffer = _StringIO()
++for n, t in sorted(by_tagnum.items()):
+   if t.description:
+     buffer.write("%d %s %s\n" % (t.tagnum, t.tagname, t.description))
+   else:
+diff --git a/tools/normalize_path.py b/tools/normalize_path.py
+index 6c4d548..363df1f 100755
+--- a/tools/normalize_path.py
++++ b/tools/normalize_path.py
+@@ -22,8 +22,8 @@ import sys
+ 
+ if len(sys.argv) > 1:
+   for p in sys.argv[1:]:
+-    print os.path.normpath(p)
++    print(os.path.normpath(p))
+   sys.exit(0)
+ 
+ for line in sys.stdin:
+-  print os.path.normpath(line.strip())
++  print(os.path.normpath(line.strip()))
+diff --git a/tools/parsedeps.py b/tools/parsedeps.py
+index 32d8ad7..1e2aaab 100755
+--- a/tools/parsedeps.py
++++ b/tools/parsedeps.py
+@@ -43,13 +43,13 @@ class Dependencies:
+     t.pos = pos
+ 
+   def get(self, tgt):
+-    if self.lines.has_key(tgt):
++    if self.linestgt in self:
+       return self.lines[tgt]
+     else:
+       return None
+ 
+   def __iter__(self):
+-    return self.lines.iteritems()
++    return self.lines.items()
+ 
+   def trace(self, tgt, prereq):
+     self.__visit = self.__visit + 1
+@@ -73,9 +73,9 @@ class Dependencies:
+     return result
+ 
+ def help():
+-  print "Commands:"
+-  print "  dep TARGET             Print the prerequisites for TARGET"
+-  print "  trace TARGET PREREQ    Print the paths from TARGET to PREREQ"
++  print("Commands:")
++  print("  dep TARGET             Print the prerequisites for TARGET")
++  print("  trace TARGET PREREQ    Print the paths from TARGET to PREREQ")
+ 
+ 
+ def main(argv):
+@@ -87,7 +87,7 @@ def main(argv):
+   deps = Dependencies()
+ 
+   filename = args[0]
+-  print "Reading %s" % filename
++  print("Reading %s" % filename)
+ 
+   if True:
+     f = open(filename)
+@@ -106,7 +106,7 @@ def main(argv):
+           deps.add(tgt, prereq)
+     f.close()
+ 
+-  print "Read %d dependencies. %d targets." % (deps.count, len(deps.lines))
++  print("Read %d dependencies. %d targets." % (deps.count, len(deps.lines)))
+   while True:
+     line = raw_input("target> ")
+     if not line.strip():
+@@ -118,12 +118,12 @@ def main(argv):
+       d = deps.get(tgt)
+       if d:
+         for prereq in d.prereqs:
+-          print prereq.tgt
++          print(prereq.tgt)
+     elif len(split) == 3 and cmd == "trace":
+       tgt = split[1]
+       prereq = split[2]
+       if False:
+-        print "from %s to %s" % (tgt, prereq)
++        print("from %s to %s" % (tgt, prereq))
+       trace = deps.trace(tgt, prereq)
+       if trace:
+         width = 0
+@@ -134,10 +134,10 @@ def main(argv):
+         for g in trace:
+           for t in g:
+             if t.pos:
+-              print t.tgt, " " * (width-len(t.tgt)), "  #", t.pos
++              print(t.tgt, " " * (width-len(t.tgt)), "  #", t.pos)
+             else:
+-              print t.tgt
+-          print
++              print(t.tgt)
++          print()
+     else:
+       help()
+ 
+@@ -145,7 +145,7 @@ if __name__ == "__main__":
+   try:
+     main(sys.argv)
+   except KeyboardInterrupt:
+-    print
++    print()
+   except EOFError:
+-    print
++    print()
+ 
+diff --git a/tools/post_process_props.py b/tools/post_process_props.py
+index 45a46ca..ea89bd4 100755
+--- a/tools/post_process_props.py
++++ b/tools/post_process_props.py
+@@ -62,7 +62,7 @@ def validate(prop):
+   """
+   check_pass = True
+   buildprops = prop.to_dict()
+-  for key, value in buildprops.iteritems():
++  for key, value in buildprops.items():
+     # Check build properties' length.
+     if len(value) > PROP_VALUE_MAX and not key.startswith("ro."):
+       check_pass = False
+diff --git a/tools/product_debug.py b/tools/product_debug.py
+index ff2657c..956edc8 100755
+--- a/tools/product_debug.py
++++ b/tools/product_debug.py
+@@ -42,7 +42,7 @@ def parse_variables(lines):
+ def render_variables(variables):
+   variables = dict(variables)
+   del variables["FILE"]
+-  variables = list(variables.iteritems())
++  variables = list(variables.items())
+   variables.sort(lambda a, b: cmp(a[0], b[0]))
+   return ("<table id='variables'>"
+       + "\n".join([ "<tr><th>%(key)s</th><td>%(val)s</td></tr>" % { "key": key, "val": val }
+@@ -104,7 +104,7 @@ def main(argv):
+     "variables": render_variables(variables),
+     "original": render_original(variables, original),
+   })
+-  print """<html>
++  print(("""<html>
+ 
+ 
+ <head>
+@@ -153,7 +153,7 @@ def main(argv):
+ %(variables)s
+ </body>
+ </html>
+-""" % values
++""" % values))
+ 
+ if __name__ == "__main__":
+   main(sys.argv)
+diff --git a/tools/releasetools/ota_package_parser.py b/tools/releasetools/ota_package_parser.py
+index 331122b..d11dcb4 100755
+--- a/tools/releasetools/ota_package_parser.py
++++ b/tools/releasetools/ota_package_parser.py
+@@ -41,7 +41,7 @@ class Stash(object):
+     self.stash_map[SHA1] = blocks
+ 
+   def FreeBlocks(self, SHA1):
+-    assert self.stash_map.has_key(SHA1), "stash {} not found".format(SHA1)
++    assert self.stash_mapSHA1 in self, "stash {} not found".format(SHA1)
+     self.current_stash_size -= self.stash_map[SHA1].size()
+     del self.stash_map[SHA1]
+ 
+diff --git a/tools/signapk/src/com/android/signapk/SignApk.java b/tools/signapk/src/com/android/signapk/SignApk.java
+index 57973ec..d43930f 100644
+--- a/tools/signapk/src/com/android/signapk/SignApk.java
++++ b/tools/signapk/src/com/android/signapk/SignApk.java
+@@ -1005,7 +1005,7 @@ class SignApk {
+ 
+         // Install Conscrypt as the highest-priority provider. Its crypto primitives are faster than
+         // the standard or Bouncy Castle ones.
+-        Security.insertProviderAt(new OpenSSLProvider(), 1);
++        try { Security.insertProviderAt(new OpenSSLProvider(), 1); } catch (Throwable _conscryptEx) { System.err.println("Warning: Conscrypt unavailable (ARM64 host): " + _conscryptEx.getMessage()); }
+         // Install Bouncy Castle (as the lowest-priority provider) because Conscrypt does not offer
+         // DSA which may still be needed.
+         // TODO: Stop installing Bouncy Castle provider once DSA is no longer needed.
+diff --git a/tools/test_extract_kernel.py b/tools/test_extract_kernel.py
+index 1a1cfcb..c716a2b 100644
+--- a/tools/test_extract_kernel.py
++++ b/tools/test_extract_kernel.py
+@@ -27,4 +27,4 @@ class ExtractKernelTest(unittest.TestCase):
+   def test_dump_self(self):
+     self.assertEqual("4.9.1", dump_version(
+         b"trash\x00Linux version 4.8.8\x00trash\x00"
+-        "other trash Linux version 4.9.1-g3 (2@s) (2) a\n\x00"))
++        b"other trash Linux version 4.9.1-g3 (2@s) (2) a\n\x00"))
+diff --git a/tools/warn.py b/tools/warn.py
+index c710164..9b37072 100755
+--- a/tools/warn.py
++++ b/tools/warn.py
+@@ -2922,17 +2922,17 @@ def html_big(param):
+ 
+ 
+ def dump_html_prologue(title):
+-  print '<html>\n<head>'
+-  print '<title>' + title + '</title>'
+-  print html_head_scripts
++  print('<html>\n<head>')
++  print(('<title>' + title + '</title>'))
++  print(html_head_scripts)
+   emit_stats_by_project()
+-  print '</head>\n<body>'
+-  print html_big(title)
+-  print '<p>'
++  print('</head>\n<body>')
++  print((html_big(title)))
++  print('<p>')
+ 
+ 
+ def dump_html_epilogue():
+-  print '</body>\n</head>\n</html>'
++  print('</body>\n</head>\n</html>')
+ 
+ 
+ def sort_warnings():
+@@ -2988,11 +2988,11 @@ def emit_stats_by_project():
+       total_all_severities += total_by_severity[s]
+   one_row.append(total_all_projects)
+   stats_rows.append(one_row)
+-  print '<script>'
++  print('<script>')
+   emit_const_string_array('StatsHeader', stats_header)
+   emit_const_object_array('StatsRows', stats_rows)
+-  print draw_table_javascript
+-  print '</script>'
++  print(draw_table_javascript)
++  print('</script>')
+ 
+ 
+ def dump_stats():
+@@ -3008,14 +3008,14 @@ def dump_stats():
+       skipped += len(i['members'])
+     else:
+       known += len(i['members'])
+-  print 'Number of classified warnings: <b>' + str(known) + '</b><br>'
+-  print 'Number of skipped warnings: <b>' + str(skipped) + '</b><br>'
+-  print 'Number of unclassified warnings: <b>' + str(unknown) + '</b><br>'
++  print(('Number of classified warnings: <b>' + str(known) + '</b><br>'))
++  print(('Number of skipped warnings: <b>' + str(skipped) + '</b><br>'))
++  print(('Number of unclassified warnings: <b>' + str(unknown) + '</b><br>'))
+   total = unknown + known + skipped
+   extra_msg = ''
+   if total < 1000:
+     extra_msg = ' (low count may indicate incremental build)'
+-  print 'Total number of warnings: <b>' + str(total) + '</b>' + extra_msg
++  print(('Total number of warnings: <b>' + str(total) + '</b>' + extra_msg))
+ 
+ 
+ # New base table of warnings, [severity, warn_id, project, warning_message]
+@@ -3051,14 +3051,14 @@ def dump_fixed():
+   """Show which warnings no longer occur."""
+   anchor = 'fixed_warnings'
+   mark = anchor + '_mark'
+-  print ('\n<br><p style="background-color:lightblue"><b>'
++  print(('\n<br><p style="background-color:lightblue"><b>'
+          '<button id="' + mark + '" '
+          'class="bt" onclick="expand(\'' + anchor + '\');">'
+          '&#x2295</button> Fixed warnings. '
+          'No more occurrences. Please consider turning these into '
+          'errors if possible, before they are reintroduced in to the build'
+-         ':</b></p>')
+-  print '<blockquote>'
++         ':</b></p>'))
++  print('<blockquote>')
+   fixed_patterns = []
+   for i in warn_patterns:
+     if not i['members']:
+@@ -3067,15 +3067,15 @@ def dump_fixed():
+     if i['option']:
+       fixed_patterns.append(' ' + i['option'])
+   fixed_patterns.sort()
+-  print '<div id="' + anchor + '" style="display:none;"><table>'
++  print(('<div id="' + anchor + '" style="display:none;"><table>'))
+   cur_row_class = 0
+   for text in fixed_patterns:
+     cur_row_class = 1 - cur_row_class
+     # remove last '\n'
+     t = text[:-1] if text[-1] == '\n' else text
+-    print '<tr><td class="c' + str(cur_row_class) + '">' + t + '</td></tr>'
+-  print '</table></div>'
+-  print '</blockquote>'
++    print(('<tr><td class="c' + str(cur_row_class) + '">' + t + '</td></tr>'))
++  print('</table></div>')
++  print('</blockquote>')
+ 
+ 
+ def find_project_index(line):
+@@ -3246,21 +3246,21 @@ def strip_escape_string(s):
+ 
+ 
+ def emit_warning_array(name):
+-  print 'var warning_{} = ['.format(name)
++  print(('var warning_{} = ['.format(name)))
+   for i in range(len(warn_patterns)):
+-    print '{},'.format(warn_patterns[i][name])
+-  print '];'
++    print(('{},'.format(warn_patterns[i][name])))
++  print('];')
+ 
+ 
+ def emit_warning_arrays():
+   emit_warning_array('severity')
+-  print 'var warning_description = ['
++  print('var warning_description = [')
+   for i in range(len(warn_patterns)):
+     if warn_patterns[i]['members']:
+-      print '"{}",'.format(escape_string(warn_patterns[i]['description']))
++      print(('"{}",'.format(escape_string(warn_patterns[i]['description']))))
+     else:
+-      print '"",'  # no such warning
+-  print '];'
++      print('"",')  # no such warning
++  print('];')
+ 
+ scripts_for_warning_groups = """
+   function compareMessages(x1, x2) { // of the same warning type
+@@ -3393,39 +3393,39 @@ scripts_for_warning_groups = """
+ 
+ # Emit a JavaScript const string
+ def emit_const_string(name, value):
+-  print 'const ' + name + ' = "' + escape_string(value) + '";'
++  print(('const ' + name + ' = "' + escape_string(value) + '";'))
+ 
+ 
+ # Emit a JavaScript const integer array.
+ def emit_const_int_array(name, array):
+-  print 'const ' + name + ' = ['
++  print(('const ' + name + ' = ['))
+   for n in array:
+-    print str(n) + ','
+-  print '];'
++    print((str(n) + ','))
++  print('];')
+ 
+ 
+ # Emit a JavaScript const string array.
+ def emit_const_string_array(name, array):
+-  print 'const ' + name + ' = ['
++  print(('const ' + name + ' = ['))
+   for s in array:
+-    print '"' + strip_escape_string(s) + '",'
+-  print '];'
++    print(('"' + strip_escape_string(s) + '",'))
++  print('];')
+ 
+ 
+ # Emit a JavaScript const string array for HTML.
+ def emit_const_html_string_array(name, array):
+-  print 'const ' + name + ' = ['
++  print(('const ' + name + ' = ['))
+   for s in array:
+-    print '"' + cgi.escape(strip_escape_string(s)) + '",'
+-  print '];'
++    print(('"' + cgi.escape(strip_escape_string(s)) + '",'))
++  print('];')
+ 
+ 
+ # Emit a JavaScript const object array.
+ def emit_const_object_array(name, array):
+-  print 'const ' + name + ' = ['
++  print(('const ' + name + ' = ['))
+   for x in array:
+-    print str(x) + ','
+-  print '];'
++    print((str(x) + ','))
++  print('];')
+ 
+ 
+ def emit_js_data():
+@@ -3471,18 +3471,18 @@ def dump_html():
+   dump_html_prologue('Warnings for ' + platform_version + ' - ' +
+                      target_product + ' - ' + target_variant)
+   dump_stats()
+-  print '<br><div id="stats_table"></div><br>'
+-  print '\n<script>'
++  print('<br><div id="stats_table"></div><br>')
++  print('\n<script>')
+   emit_js_data()
+-  print scripts_for_warning_groups
+-  print '</script>'
++  print(scripts_for_warning_groups)
++  print('</script>')
+   emit_buttons()
+   # Warning messages are grouped by severities or project names.
+-  print '<br><div id="warning_groups"></div>'
++  print('<br><div id="warning_groups"></div>')
+   if args.byproject:
+-    print '<script>groupByProject();</script>'
++    print('<script>groupByProject();</script>')
+   else:
+-    print '<script>groupBySeverity();</script>'
++    print('<script>groupBySeverity();</script>')
+   dump_fixed()
+   dump_html_epilogue()
+ 
+@@ -3506,7 +3506,7 @@ def count_severity(writer, sev, kind):
+       warning = kind + ': ' + description_for_csv(i)
+       writer.writerow([n, '', warning])
+       # print number of warnings for each project, ordered by project name.
+-      projects = i['projects'].keys()
++      projects = list(i['projects'].keys())
+       projects.sort()
+       for p in projects:
+         writer.writerow([i['projects'][p], p, warning])

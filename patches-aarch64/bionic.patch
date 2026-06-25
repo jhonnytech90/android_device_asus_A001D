@@ -1,0 +1,155 @@
+diff --git a/libc/tools/genfunctosyscallnrs.py b/libc/tools/genfunctosyscallnrs.py
+index 6a456f2..bfc350f 100755
+--- a/libc/tools/genfunctosyscallnrs.py
++++ b/libc/tools/genfunctosyscallnrs.py
+@@ -25,7 +25,7 @@ def gen_syscall_nrs(out_file, base_syscall_file, syscall_NRs):
+   for arch in ('arm', 'arm64', 'mips', 'mips64', 'x86', 'x86_64'):
+     base_names = load_syscall_names_from_file(base_syscall_file, arch)
+ 
+-    for func,syscall in base_names.iteritems():
++    for func,syscall in base_names.items():
+       out_file.write("#define __" + arch + "_" + func + " " + str(syscall_NRs[arch][syscall]) + ";\n")
+ 
+ def main():
+diff --git a/libc/tools/genseccomp.py b/libc/tools/genseccomp.py
+index 365e198..23f3c49 100755
+--- a/libc/tools/genseccomp.py
++++ b/libc/tools/genseccomp.py
+@@ -74,7 +74,7 @@ def parse_syscall_NRs(names_path):
+         pass
+ 
+   syscalls = {}
+-  for name, value in constants.iteritems():
++  for name, value in constants.items():
+     if not name.startswith("__NR_") and not name.startswith("__ARM_NR"):
+       continue
+     if name.startswith("__NR_"):
+@@ -87,7 +87,7 @@ def parse_syscall_NRs(names_path):
+ 
+ def convert_NRs_to_ranges(syscalls):
+   # Sort the values so we convert to ranges and binary chop
+-  syscalls = sorted(syscalls, lambda x, y: cmp(x[1], y[1]))
++  syscalls = sorted(syscalls, key=lambda x: x[1])
+ 
+   # Turn into a list of ranges. Keep the names for the comments
+   ranges = []
+diff --git a/libc/tools/gensyscalls.py b/libc/tools/gensyscalls.py
+index 9a3b95e..76f354c 100755
+--- a/libc/tools/gensyscalls.py
++++ b/libc/tools/gensyscalls.py
+@@ -5,7 +5,7 @@
+ # makefiles used to build all the stubs.
+ 
+ import atexit
+-import commands
++import subprocess
+ import filecmp
+ import glob
+ import logging
+@@ -407,7 +407,7 @@ class SysCallsTxtParser:
+         self.lineno   = 0
+ 
+     def E(self, msg):
+-        print "%d: %s" % (self.lineno, msg)
++        print("%d: %s" % (self.lineno, msg))
+ 
+     def parse_line(self, line):
+         """ parse a syscall spec line.
+@@ -432,7 +432,7 @@ class SysCallsTxtParser:
+             return
+ 
+         syscall_func = return_type[-1]
+-        return_type  = string.join(return_type[:-1],' ')
++        return_type  = ' '.join(return_type[:-1])
+         socketcall_id = -1
+ 
+         pos_colon = syscall_func.find(':')
+@@ -464,13 +464,13 @@ class SysCallsTxtParser:
+             alias_delim = syscall_name.find('|')
+             if alias_delim > 0:
+                 syscall_name = syscall_name[:alias_delim]
+-            syscall_aliases = string.split(alias_list, ',')
++            syscall_aliases = alias_list.split(',')
+         else:
+             syscall_aliases = []
+ 
+         if pos_rparen > pos_lparen+1:
+             syscall_params = line[pos_lparen+1:pos_rparen].split(',')
+-            params         = string.join(syscall_params,',')
++            params         = ','.join(syscall_params)
+         else:
+             syscall_params = []
+             params         = "void"
+@@ -498,7 +498,7 @@ class SysCallsTxtParser:
+                 if "64" in arch:
+                     t[arch] = True
+         else:
+-            for arch in string.split(arch_list, ','):
++            for arch in arch_list.split(','):
+                 if arch in all_arches:
+                     t[arch] = True
+                 else:
+@@ -540,13 +540,13 @@ class State:
+         for syscall in self.syscalls:
+             syscall["__NR_name"] = make__NR_name(syscall["name"])
+ 
+-            if syscall.has_key("arm"):
++            if "arm" in syscall:
+                 syscall["asm-arm"] = add_footer(32, arm_eabi_genstub(syscall), syscall)
+ 
+-            if syscall.has_key("arm64"):
++            if "arm64" in syscall:
+                 syscall["asm-arm64"] = add_footer(64, arm64_genstub(syscall), syscall)
+ 
+-            if syscall.has_key("x86"):
++            if "x86" in syscall:
+                 if syscall["socketcall_id"] >= 0:
+                     syscall["asm-x86"] = add_footer(32, x86_genstub_socketcall(syscall), syscall)
+                 else:
+@@ -555,13 +555,13 @@ class State:
+                 E("socketcall_id for dispatch syscalls is only supported for x86 in '%s'" % t)
+                 return
+ 
+-            if syscall.has_key("mips"):
++            if "mips" in syscall:
+                 syscall["asm-mips"] = add_footer(32, mips_genstub(syscall), syscall)
+ 
+-            if syscall.has_key("mips64"):
++            if "mips64" in syscall:
+                 syscall["asm-mips64"] = add_footer(64, mips64_genstub(syscall), syscall)
+ 
+-            if syscall.has_key("x86_64"):
++            if "x86_64" in syscall:
+                 syscall["asm-x86_64"] = add_footer(64, x86_64_genstub(syscall), syscall)
+ 
+ 
+@@ -619,7 +619,7 @@ class State:
+     def gen_syscall_stubs(self):
+         for syscall in self.syscalls:
+             for arch in all_arches:
+-                if syscall.has_key("asm-%s" % arch):
++                if "asm-%s" % arch in syscall:
+                     filename = "arch-%s/syscalls/%s.S" % (arch, syscall["func"])
+                     logging.info(">>> generating " + filename)
+                     fp = create_file(filename)
+@@ -675,16 +675,16 @@ class State:
+ 
+         if not DRY_RUN:
+             if adds:
+-                commands.getoutput("git add " + " ".join(adds))
++                subprocess.getoutput("git add " + " ".join(adds))
+             if deletes:
+-                commands.getoutput("git rm " + " ".join(deletes))
++                subprocess.getoutput("git rm " + " ".join(deletes))
+             if edits:
+                 for file in edits:
+                     shutil.copyfile(os.path.join(bionic_temp, file),
+                                     os.path.join(bionic_libc_root, file))
+-                commands.getoutput("git add " + " ".join((os.path.join(bionic_libc_root, file)) for file in edits))
++                subprocess.getoutput("git add " + " ".join((os.path.join(bionic_libc_root, file)) for file in edits))
+ 
+-            commands.getoutput("git add %s" % (os.path.join(bionic_libc_root, "SYSCALLS.TXT")))
++            subprocess.getoutput("git add %s" % (os.path.join(bionic_libc_root, "SYSCALLS.TXT")))
+ 
+         if (not adds) and (not deletes) and (not edits):
+             logging.info("no changes detected!")
