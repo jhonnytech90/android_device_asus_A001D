@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Local manifest para LineageOS 17.1 - ASUS A001D (A001D / ZB634KL)
+     Coloque este arquivo em: .repo/local_manifests/a001d.xml
+     Substitui os repos padrao pelos forks pessoais com todas as correcoes. -->
+<manifest>
+
+  <!-- Kernel: correcoes de defconfig para MSM8953 + drivers -->
+  <remove-project name="LineageOS/android_kernel_asus_X00T" />
+  <project name="jhonnytech90/kernel_asus_A001D"
+           path="kernel/asus/A001D"
+           remote="github"
+           revision="lineageos-17.1-clean" />
+
+  <!-- Device tree: sepolicy, init scripts, BoardConfig, patches -->
+  <remove-project name="LineageOS/android_device_asus_X00T" />
+  <project name="jhonnytech90/android_device_asus_A001D"
+           path="device/asus/A001D"
+           remote="github"
+           revision="lineageos-17.1-clean" />
+
+  <!-- Vendor blobs -->
+  <remove-project name="TheMuppets/proprietary_vendor_asus" />
+  <project name="jhonnytech90/vendor_asus_A001D"
+           path="vendor/asus/A001D"
+           remote="github"
+           revision="lineageos-17.1-clean" />
+
+  <!-- Remote GitHub (se nao definido no manifesto principal) -->
+  <remote name="github"
+          fetch="https://github.com/"
+          review="" />
+
+</manifest>
