@@ -1,0 +1,6 @@
+# MMI (Factory Test) types for A001D
+# These are legacy names used in file_contexts
+type mmi_exec, exec_type, vendor_file_type, file_type;
+type mmi_data_file, file_type, data_file_type;
+type mmi_socket, file_type;
+type persist_mmi_file, file_type, data_file_type;

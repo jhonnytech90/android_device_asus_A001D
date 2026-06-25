@@ -3,3 +3,6 @@ binder_use(hal_power_default)
 allow hal_power_default input_device:dir { read };
 
 allow hal_power_default proc_tpd_gesture:file rw_file_perms;
+
+# hal_power_default uses regular binder (servicemanager) for power service
+typeattribute hal_power_default binder_in_vendor_violators;

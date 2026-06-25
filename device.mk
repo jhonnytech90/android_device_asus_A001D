@@ -349,7 +349,6 @@ PRODUCT_PACKAGES += \
     qti_telephony_utils.xml \
     telephony-ext
 
-PRODUCT_BOOT_JARS += telephony-ext
 
 # ── SECCOMP ──────────────────────────────────────────────────────────────────
 PRODUCT_COPY_FILES += \
@@ -424,13 +423,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/prebuilt/pronto_wlan.ko:$(TARGET_COPY_OUT_VENDOR)/lib/modules/wlan.ko
 
-# ── BOOT JARS QTI (confirmados nos blobs Oreo) ────────────────────────────
-PRODUCT_BOOT_JARS += \
-    telephony-ext \
-    qti-telephony-common \
-    qcrilhook \
-    ims-common \
-    embmslibrary
 
 # ── PRODUCT PACKAGES adicionais confirmados nos blobs ─────────────────────
 PRODUCT_PACKAGES += \

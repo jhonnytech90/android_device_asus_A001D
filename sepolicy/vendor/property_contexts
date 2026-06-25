@@ -31,7 +31,6 @@ debug.gralloc.             u:object_r:debug_gralloc_prop:s0
 debug.sf.nobootanimation   u:object_r:boot_animation_prop:s0
 dolby.audio.               u:object_r:audio_prop:s0
 dolby.                     u:object_r:dolby_prop:s0
-hw.fm.                     u:object_r:fm_prop:s0
 location.                  u:object_r:location_prop:s0
 media.msm8953.version      u:object_r:media_msm8953_version_prop:s0
 netd.fstman.               u:object_r:netd_prop:s0
